@@ -1,0 +1,55 @@
+﻿@page
+@model StatisticsModel
+@{
+    ViewData["Title"] = "Statistics";
+    ViewData["ActivePage"] = ManageNavPages.Statistics;
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6 text-center">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.RegistrationDate"></label>
+                <input asp-for="Input.RegistrationDate" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.RegistrationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Completed"></label>
+                <input asp-for="Input.Completed" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.Completed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.InProgress"></label>
+                <input asp-for="Input.InProgress" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.InProgress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Arts"></label>
+                <input asp-for="Input.Arts" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.Arts" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Statistics"></label>
+                <input asp-for="Input.Statistics" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.Statistics" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Followers"></label>
+                <input asp-for="Input.Followers" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.Followers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Following"></label>
+                <input asp-for="Input.Following" class="form-control bg-white" disabled />
+                <span asp-validation-for="Input.Following" class="text-danger"></span>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

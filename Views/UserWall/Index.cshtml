@@ -1,0 +1,19 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout.cshtml";
+}
+<div class="text-center">
+    @if (Model.Id == UserManager.GetUserId(User))
+    {
+        <button id="load-art" type="submit" class="btn btn-primary">Load art</button>
+    }
+</div>
+    
+@foreach (var Art in Model.Arts)
+{
+    <input asp-for=@Art.Name class="form-control" disabled />
+}

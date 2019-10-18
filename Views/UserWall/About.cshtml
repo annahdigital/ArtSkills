@@ -1,0 +1,29 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "About";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 text-center">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for=@Model.Name></label>
+                <input asp-for=@Model.Name class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for=@Model.Surname></label>
+                <input asp-for=@Model.Surname class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for=@Model.DateOfBirth></label>
+                <input asp-for=@Model.DateOfBirth class="form-control" disabled />
+            </div>
+        </form>
+    </div>
+</div>
+
