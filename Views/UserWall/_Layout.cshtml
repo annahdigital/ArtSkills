@@ -12,18 +12,16 @@
     {
         <button id="update-profile-button" type="submit" class="btn btn-primary">Follow user</button>
     }
+    @if (Model.Id == UserManager.GetUserId(User))
+    {
+        <button id="load-art" type="submit" class="btn btn-primary">Load art</button>
+        <button id="add_tasklist" type="submit" class="btn btn-primary">Add tasklist</button>
+    }
 </div>
 <hr>
 
-    <div class="row">
-        <div class="col-md-5">
-            <partial name="_UserWallNavigation" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
-    </div>
-
-@section Scripts {
-    @RenderSection("Scripts", required: false)
-}
+<div class="text-center">
+    <partial name="_UserWallNavigation" />
+    <hr />
+    @RenderBody()
+</div>

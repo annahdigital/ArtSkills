@@ -6,24 +6,39 @@
     ViewData["Title"] = "About";
     Layout = "_Layout.cshtml";
 }
-
-<div class="row">
-    <div class="col-md-6 text-center">
-        <form id="profile-form" method="post">
+    <div class="col-4 offset-4 text-center">
+        <h3>Basic information</h3>
+        <form id="profile-form" method="post" class="">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for=@Model.Name></label>
-                <input asp-for=@Model.Name class="form-control" disabled />
+                <input asp-for=@Model.Name class="form-control bg-white" disabled />
             </div>
             <div class="form-group">
                 <label asp-for=@Model.Surname></label>
-                <input asp-for=@Model.Surname class="form-control" disabled />
+                <input asp-for=@Model.Surname class="form-control bg-white" disabled />
             </div>
             <div class="form-group">
-                <label asp-for=@Model.DateOfBirth></label>
-                <input asp-for=@Model.DateOfBirth class="form-control" disabled />
+                <label>Date of birth</label>
+                <input asp-for=@Model.DateOfBirth class="form-control bg-white" disabled />
             </div>
         </form>
+        <hr />
+        <h3>Statistics</h3>
+        <div class="form-group">
+            <label>Registration date</label>
+            <input asp-for=@Model.RegistrationDate class="form-control bg-white" disabled />
+        </div>
+        <div class="form-group">
+            <label>Count of arts</label>
+            <input asp-for=@Model.Arts.Count class="form-control bg-white" disabled />
+        </div>
+        <div class="form-group">
+            <label>Completed tasklists</label>
+            <input asp-for=@Model.Completed.Count class="form-control bg-white" disabled />
+        </div>
+        <div class="form-group">
+            <label>Tasklists in progress</label>
+            <input asp-for=@Model.InProgress.Count class="form-control bg-white" disabled />
+        </div>
     </div>
-</div>
-
