@@ -7,16 +7,20 @@ using ArtSkills.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Task = System.Threading.Tasks.Task;
+
 
 namespace ArtSkills.Controllers
 {
     public class UserWallController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public UserWallController(UserManager<ApplicationUser> userManager)
+        private ApplicationDbContext applicationDbContext { get; set; }
+        public UserWallController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            applicationDbContext = context;
         }
 
         //[HttpGet]
@@ -38,6 +42,23 @@ namespace ArtSkills.Controllers
         {
             ApplicationUser user = await GetCurrentUserAsync();
             return View(user);
+        }
+
+        public async Task<IActionResult> AddArt()
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddArt(string name, string pictureUrl, string description)
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            var art = user.PostArt(name, description, pictureUrl);
+            await _userManager.UpdateAsync(user);
+            applicationDbContext.Arts.Add(art);
+            applicationDbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
 
     }

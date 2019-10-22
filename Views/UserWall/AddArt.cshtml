@@ -1,0 +1,30 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "Add art";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="col-4 offset-4 text-center">
+    <h3>Adding art</h3>
+    <hr/>
+    <form asp-action="AddArt" method="post">
+        <div class="form-group">
+            <label>Name of the art</label>
+            <input name="name" class="form-control bg-white"/>
+        </div>
+        <div class="form-group">
+            <label>Picture</label>
+            <input name="pictureUrl" class="form-control bg-white" />
+        </div>
+        <div class="form-group">
+        <label>Description</label>
+        </div>
+        <div class="form-group">
+            <textarea name="Description" rows="5" cols="44"> </textarea>
+        </div>
+    <button type="submit" class="btn btn-primary">Add art</button>
+    </form>
+</div>

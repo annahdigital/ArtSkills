@@ -1,0 +1,40 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <h2>List of users</h2>
+</div>
+<hr/>
+<table class="table">
+    <tr>
+        <th>Artist nickname</th>
+        <th>Email</th>
+        <th>User role</th>
+        <th>Edit</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+<tr>
+    @if (user.artistNickname != null)
+    {
+        <td> @user.artistNickname </td>
+    }
+    else
+    {
+        <td>Nickname unknown</td>
+    }
+    <!--<td>@((await UserManager.GetRolesAsync(user)).ToList()[0])</td>-->
+    <td>@user.UserRole</td>
+    <td>@user.Email</td>
+    <td>
+        <a class="btn btn-sm btn-primary" asp-action="EditUserRoles" asp-route-userid="@user.Id">User roles</a>
+    </td>
+</tr>
+    }
+</table>
+

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArtSkills.Data;
 //using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNet.Identity.EntityFramework;
@@ -20,6 +21,7 @@ namespace ArtSkills.Models
         public ICollection<TaskList> Completed;
         public ICollection<TaskList> InProgress;
         public ICollection<Art> Arts;
+        public string UserRole { get; set; }
 
         public double Statistics => InProgress.Count == 0 ? 0 : Completed.Count / InProgress.Count * 100; 
 
@@ -34,6 +36,7 @@ namespace ArtSkills.Models
             this.Arts = new List<Art>();
             this.FollowedBy = new List<FollowArtist>();
             this.Following = new List<FollowArtist>();
+
         }
         public ApplicationUser(string name)
         {
@@ -46,9 +49,11 @@ namespace ArtSkills.Models
             this.Following = new List<FollowArtist>();
         }
 
-        public void PostArt(string name, string description)
+        public Art PostArt(string name, string description, string pictureUrl)
         {
-            this.Arts.Add(new Art(name, this, description));
+            var art = new Art(name, this, description, pictureUrl);
+            this.Arts.Add(art);
+            return art;
         }
 
 

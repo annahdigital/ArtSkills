@@ -1,0 +1,34 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ArtSkills.ViewModels.ChangeRoleViewModel
+@{
+    ViewData["Title"] = "Edit user roles";
+}
+
+<div class="text-center">
+    <h2>Changing roles for @Model.UserEmail</h2>
+</div>
+<hr />
+@if (User.IsInRole("moderator") && Model.UserRoles[0] == "admin")
+{
+    <div class="text-center">
+        <h3>Current moderator can't change the role of @Model.UserEmail (admin).</h3>
+    </div>
+}
+else
+{
+    <form asp-action="EditUserRoles" method="post">
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <div class="form-group">
+            @foreach (IdentityRole role in Model.AllRoles)
+            {
+                <input type="radio" name="roles" value="@role.Name"
+                       @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")/>
+                @role.Name
+                <br/>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+}
