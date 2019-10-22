@@ -7,6 +7,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
     <div class="text-center">
+        @if (Model.UserPic == null)
+        {
+            <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
+        }
         <h1>@Model.artistNickname</h1>
         <p>@Model.About</p>
         @if (Model.Id != UserManager.GetUserId(User))
@@ -16,9 +20,9 @@
         @if (Model.Id == UserManager.GetUserId(User))
         {
             <div class="btn-group" role="group">
-            <form method="get" asp-controller="UserWall" asp-action="AddArt">
-                <button id="addArt" class="btn btn-primary">Load art</button>
-            </form>
+                <form method="get" asp-controller="UserWall" asp-action="AddArt">
+                    <button id="addArt" class="btn btn-primary">Load art</button>
+                </form>
                 <button id="add_tasklist" onclick="redirect" type="submit" class="btn btn-primary">Add tasklist</button>
             </div>
             @if (Model.UserRole == "admin" || Model.UserRole == "moderator")

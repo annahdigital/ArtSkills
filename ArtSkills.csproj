@@ -7,11 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\startup.png" />
+    <None Remove="wwwroot\Resources\startup.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\startup.png" />
+    <EmbeddedResource Include="wwwroot\Resources\startup.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Resources\sorry.gif" />
   </ItemGroup>
 
 
