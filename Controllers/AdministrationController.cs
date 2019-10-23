@@ -61,17 +61,16 @@ namespace ArtSkills.Controllers
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                if (currentUser.UserRole == "moderator" && roles[0] == "admin")
+                if ((await _userManager.GetRolesAsync(currentUser)).Contains("moderator") && roles[0] == "admin")
                 {
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     var userRoles = await _userManager.GetRolesAsync(user);
-                    await _userManager.RemoveFromRolesAsync(user, new List<string>() {user.UserRole});
+                    await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, new List<string>() {roles[0]});
-                    user.UserRole = roles[0];
-                    await _userManager.UpdateAsync(user);
+                    //await _userManager.UpdateAsync(user);
                     return RedirectToAction("Index");
                 }
             }

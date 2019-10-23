@@ -35,8 +35,8 @@
     {
         <td>Nickname unknown</td>
     }
-    <!--<td>@((await UserManager.GetRolesAsync(user)).ToList()[0])</td>-->
-    <td>@user.UserRole</td>
+    <td>@((await UserManager.GetRolesAsync(user)).ToList()[0])</td>
+   
     <td>@user.Email</td>
     <td>
         <a class="btn btn-sm btn-primary" asp-action="EditUserRoles" asp-route-userid="@user.Id">User roles</a>

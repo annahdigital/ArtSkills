@@ -6,38 +6,39 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="text-center">
-    @if (Model.UserPic == null)
-    {
-        <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
-    }
-    else
-    {
-        <img src="@Model.UserPic" class="img-circle" height="175" width="175"/>
-    }
-    <h1>@Model.artistNickname</h1>
-    <p>@Model.About</p>
-    @if (Model.Id != UserManager.GetUserId(User))
-    {
-        <button id="update-profile-button" type="submit" class="btn btn-primary">Follow user</button>
-    }
-    @if (Model.Id == UserManager.GetUserId(User))
-    {
-        <div class="btn-group" role="group">
-            <form method="get" asp-controller="UserWall" asp-action="AddArt">
-                <button id="addArt" class="btn btn-primary">Load art</button>
-            </form>
-            <button id="add_tasklist" onclick="redirect" type="submit" class="btn btn-primary">Add tasklist</button>
-            <form method="get" asp-controller="UserWall" asp-action="UploadUserPic">
-                <button id="uploadUserPic" class="btn btn-primary">Change avatar</button>
-            </form>
-        </div>
-        @if (Model.UserRole == "admin" || Model.UserRole == "moderator")
+    <div class="text-center">
+        @if (Model.UserPic == null)
         {
-            <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">Administration</a>
+            <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
         }
-    }
-</div>
+        else
+        {
+            <img src="@Model.UserPic" class="img-circle" height="175" width="175" />
+        }
+        <h1>@Model.artistNickname</h1>
+        <p>@Model.About</p>
+        @if (Model.Id != UserManager.GetUserId(User))
+        {
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Follow user</button>
+        }
+        @if (Model.Id == UserManager.GetUserId(User))
+        {
+            <div class="btn-group" role="group">
+                <form method="get" asp-controller="UserWall" asp-action="AddArt">
+                    <button id="addArt" class="btn btn-primary">Load art</button>
+                </form>
+                <button id="add_tasklist" onclick="redirect" type="submit" class="btn btn-primary">Add tasklist</button>
+                <form method="get" asp-controller="UserWall" asp-action="UploadUserPic">
+                    <button id="uploadUserPic" class="btn btn-primary">Change avatar</button>
+                </form>
+            </div>
+            <!--if (Model.UserRole == "admin" || Model.UserRole == "moderator")-->
+            if ((await UserManager.GetRolesAsync(Model)).Contains("admin") || (await UserManager.GetRolesAsync(Model)).Contains("moderator"))
+            {
+                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">Administration</a>
+            }
+        }
+    </div>
 <hr>
 
 <div class="text-center">
