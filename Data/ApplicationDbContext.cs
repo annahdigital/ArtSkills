@@ -13,8 +13,8 @@ namespace ArtSkills.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
              : base(options)
          {
-             //Database.Migrate();
-         }
+            //Database.Migrate();
+        }
 
         public DbSet<Art> Arts { get; set; }
         public DbSet<TaskList> TaskLists { get; set; }

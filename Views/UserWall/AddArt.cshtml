@@ -9,22 +9,25 @@
 
 <div class="col-4 offset-4 text-center">
     <h3>Adding art</h3>
-    <hr/>
-    <form asp-action="AddArt" method="post">
-        <div class="form-group">
-            <label>Name of the art</label>
-            <input name="name" class="form-control bg-white"/>
-        </div>
-        <div class="form-group">
-            <label>Picture</label>
-            <input name="pictureUrl" class="form-control bg-white" />
-        </div>
-        <div class="form-group">
-        <label>Description</label>
-        </div>
-        <div class="form-group">
+    <hr />
+
+    <form asp-action="AddArt" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Name of the art</legend>
+            <input name="name" class="form-control bg-white" required />
+        </fieldset>
+
+        <fieldset>
+            <legend>Load a picture</legend>
+            <input name="pictureUrl" type="file" class="form-control" required />
+        </fieldset>
+        <hr />
+        <fieldset>
+            <legend>Description</legend>
             <textarea name="Description" rows="5" cols="44"> </textarea>
-        </div>
-    <button type="submit" class="btn btn-primary">Add art</button>
+        </fieldset>
+        <hr />
+        <button type="submit" class="btn btn-primary">Add art</button>
+
     </form>
 </div>

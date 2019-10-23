@@ -15,6 +15,10 @@
         {
             foreach (var Art in Model.Arts)
             {
-                <input asp-for=@Art.Name class="form-control" disabled/>
+                @if (Art.ImagePath != null)
+                {
+                    <label>@Art.Name</label>
+                    <img src="@Art.ImagePath" />
+                }
             }
         }

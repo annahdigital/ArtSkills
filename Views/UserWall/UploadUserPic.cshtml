@@ -1,0 +1,22 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "Changing avatar.";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="col-4 offset-4 text-center">
+    <h3>Change avatar</h3>
+    <hr />
+
+    <form asp-action="UploadUserPic" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Load a picture</legend>
+            <input name="pictureUrl" type="file" class="form-control" required />
+        </fieldset>
+        <hr />
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>

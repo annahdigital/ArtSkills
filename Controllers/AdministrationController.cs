@@ -30,19 +30,8 @@ namespace ArtSkills.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            /*foreach (var user in _userManager.Users.ToList())
-            {
-                if (user.UserRole == null)
-                {
-                    //await _userManager.AddToRoleAsync(user, "user");
-                    user.UserRole = "user";
-                    await _userManager.UpdateAsync(user);
-                }
-
-            }*/
-            //currentUser = await GetCurrentUserAsync();
             return View(_userManager.Users.ToList());
         }
 

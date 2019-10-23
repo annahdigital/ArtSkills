@@ -4665,6 +4665,14 @@ input[type="button"].btn-block {
   border-top-right-radius: calc(0.25rem - 1px);
 }
 
+.img-circle {
+    border-radius: 50%;
+}
+
+.img-rounded {
+    border-radius: 6px;
+}
+
 .card-img-bottom {
   width: 100%;
   border-bottom-right-radius: calc(0.25rem - 1px);
