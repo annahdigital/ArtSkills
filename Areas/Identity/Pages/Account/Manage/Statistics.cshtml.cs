@@ -34,11 +34,14 @@ namespace ArtSkills.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Registration date")]
             public DateTime RegistrationDate { get; set; }
 
-            [Display(Name = "Completed tasks count")]
+            /*[Display(Name = "Completed tasks count")]
             public int Completed { get; set; }
 
             [Display(Name = "Tasks in progress count")]
-            public int InProgress { get; set; }
+            public int InProgress { get; set; }*/
+
+            [Display(Name = "Tasks")]
+            public int Tasklists { get; set; }
 
             [Display(Name = "Arts count")]
             public int Arts { get; set; }
@@ -64,8 +67,9 @@ namespace ArtSkills.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 RegistrationDate = user.RegistrationDate,
-                Completed = user.Completed.Count,
-                InProgress = user.InProgress.Count,
+                /*Completed = user.TaskLists.Count,
+                InProgress = user.TaskLists.Count,*/
+                Tasklists = user.TaskLists.Count,
                 Arts = user.Arts.Count,
                 Statistics = user.Statistics,
                 Followers = user.FollowedBy.Count,

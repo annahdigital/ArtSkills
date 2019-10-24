@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ArtSkills.Data.Migrations
+namespace ArtSkills.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191012205428_AppDB2")]
-    partial class AppDB2
+    [Migration("20191024125249_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,8 @@ namespace ArtSkills.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<DateTime>("RegistrationDate");
+                    b.Property<DateTime>("RegistrationDate")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("SecurityStamp");
 
@@ -84,6 +85,131 @@ namespace ArtSkills.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Art", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime>("PublishDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Arts");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("ArtId");
+
+                    b.Property<DateTime>("CommentDate")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CommentText");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ArtId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.FollowArtist", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ArtistId");
+
+                    b.Property<string>("FollowerId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("FollowerId");
+
+                    b.ToTable("FollowArtist");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Like", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("ArtId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ArtId");
+
+                    b.ToTable("Like");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Task", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("Status");
+
+                    b.Property<string>("taskListId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("taskListId");
+
+                    b.ToTable("Task");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.TaskList", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int>("Completed");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("TaskLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -198,6 +324,60 @@ namespace ArtSkills.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Art", b =>
+                {
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Arts")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Comment", b =>
+                {
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ArtSkills.Models.Art", "Art")
+                        .WithMany("Comments")
+                        .HasForeignKey("ArtId");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.FollowArtist", b =>
+                {
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "Artist")
+                        .WithMany("FollowedBy")
+                        .HasForeignKey("ArtistId");
+
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "Follower")
+                        .WithMany("Following")
+                        .HasForeignKey("FollowerId");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Like", b =>
+                {
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Likes")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ArtSkills.Models.Art", "Art")
+                        .WithMany("Likes")
+                        .HasForeignKey("ArtId");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.Task", b =>
+                {
+                    b.HasOne("ArtSkills.Models.TaskList", "taskList")
+                        .WithMany("Tasks")
+                        .HasForeignKey("taskListId");
+                });
+
+            modelBuilder.Entity("ArtSkills.Models.TaskList", b =>
+                {
+                    b.HasOne("ArtSkills.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("TaskLists")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

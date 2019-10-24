@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ArtSkills.Data.Migrations
+namespace ArtSkills.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,14 @@ namespace ArtSkills.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    artistNickname = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    RegistrationDate = table.Column<DateTime>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    About = table.Column<string>(nullable: true),
+                    UserPic = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,6 +73,29 @@ namespace ArtSkills.Data.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Arts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    PublishDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Arts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Arts_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +183,131 @@ namespace ArtSkills.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FollowArtist",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    FollowerId = table.Column<string>(nullable: true),
+                    ArtistId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FollowArtist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FollowArtist_AspNetUsers_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FollowArtist_AspNetUsers_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskLists",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Completed = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskLists_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CommentText = table.Column<string>(nullable: true),
+                    CommentDate = table.Column<DateTime>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ArtId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Arts_ArtId",
+                        column: x => x.ArtId,
+                        principalTable: "Arts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Like",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ArtId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Like", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Like_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Like_Arts_ArtId",
+                        column: x => x.ArtId,
+                        principalTable: "Arts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Task",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    taskListId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Task", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Task_TaskLists_taskListId",
+                        column: x => x.taskListId,
+                        principalTable: "TaskLists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Arts_ApplicationUserId",
+                table: "Arts",
+                column: "ApplicationUserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +346,46 @@ namespace ArtSkills.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ApplicationUserId",
+                table: "Comment",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ArtId",
+                table: "Comment",
+                column: "ArtId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowArtist_ArtistId",
+                table: "FollowArtist",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowArtist_FollowerId",
+                table: "FollowArtist",
+                column: "FollowerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Like_ApplicationUserId",
+                table: "Like",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Like_ArtId",
+                table: "Like",
+                column: "ArtId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Task_taskListId",
+                table: "Task",
+                column: "taskListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskLists_ApplicationUserId",
+                table: "TaskLists",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +406,25 @@ namespace ArtSkills.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "FollowArtist");
+
+            migrationBuilder.DropTable(
+                name: "Like");
+
+            migrationBuilder.DropTable(
+                name: "Task");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Arts");
+
+            migrationBuilder.DropTable(
+                name: "TaskLists");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

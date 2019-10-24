@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,15 +8,18 @@ namespace ArtSkills.Models
 {
     public class TaskList
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ApplicationUser Creator { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public int Completed { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<Task> Tasks;
+        public virtual List<Task> Tasks { get; set; }
+
+        [NotMapped]
         public bool Status => Percentage >= 100;
+        [NotMapped]
         public double Percentage => Completed / Tasks.Count * 100;
 
         public TaskList()
@@ -26,7 +30,7 @@ namespace ArtSkills.Models
         public void SaveTaskList(String name, ApplicationUser creator, string description)
         {
             this.Name = name;
-            this.Creator = creator;
+            this.ApplicationUser = creator;
             this.Description = description;
         }
 

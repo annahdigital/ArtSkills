@@ -7,8 +7,9 @@ namespace ArtSkills.Models
 {
     public class FollowArtist
     {
-        public ApplicationUser Follower { get; set; }
-        public ApplicationUser Artist { get; set; }
+        public string Id { get; set; }
+        public virtual ApplicationUser Follower { get; set; }
+        public virtual ApplicationUser Artist { get; set; }
         public string FollowerId { get; set; }
         public string ArtistId { get; set; }
     }

@@ -13,8 +13,8 @@ namespace ArtSkills.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
              : base(options)
          {
-             //Database.Migrate();
-         }
+            Database.Migrate();
+        }
 
         public DbSet<Art> Arts { get; set; }
         public DbSet<TaskList> TaskLists { get; set; }
@@ -22,6 +22,9 @@ namespace ArtSkills.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //builder.Entity<ApplicationUser>().HasMany(a => a.Arts).WithOne(u => u.ApplicationUser);
+            builder.Entity<ApplicationUser>().HasMany(a => a.Following).WithOne(u => u.Follower);
+            builder.Entity<ApplicationUser>().HasMany(a => a.FollowedBy).WithOne(u => u.Artist);
             base.OnModelCreating(builder);
         }
     }

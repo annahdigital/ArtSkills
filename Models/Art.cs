@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,14 +8,15 @@ namespace ArtSkills.Models
 {
     public class Art
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ImagePath { get; set; }
-        public string Name { get; set; }
-        public string AuthorId { get; set; }
+        public string Name { get; set; }        
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public string Description { get; set; }
         public DateTime PublishDate { get; set; }
-        public List<ApplicationUser> UserLikes;
-        public List<Comment> Comments;
+        public virtual ICollection<Like> Likes { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public Art()
         {
@@ -24,23 +26,23 @@ namespace ArtSkills.Models
         public Art(string name, ApplicationUser author, string description, string pictureUrl)
         {
             this.Name = name;
-            this.AuthorId = author.Id;
+            this.UserId = author.Id;
             this.ImagePath = pictureUrl;
             this.Description = description;
             this.PublishDate = DateTime.Now;
-            this.UserLikes = new List<ApplicationUser>();
+            //this.Likes = new List<ApplicationUser>();
             this.Comments = new List<Comment>();
         }
 
-        public void LikeArt(ApplicationUser user)
+       /* public void LikeArt(ApplicationUser user)
         {
-            UserLikes.Add(user);
+            Likes.Add(user);
         }
 
         public void UnlikeArt(ApplicationUser user)
         {
-            UserLikes.Remove(user);
-        }
+            Likes.Remove(user);
+        }*/
 
         public void EditInfo(string name, string description)
         {

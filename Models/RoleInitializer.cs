@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ArtSkills.Models
 {
-    public class RoleInitializer
+    public static class RoleInitializer
     {
         public static async System.Threading.Tasks.Task InitializeAsync(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
@@ -23,7 +23,7 @@ namespace ArtSkills.Models
 
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
-                ApplicationUser admin = new ApplicationUser {Email = adminEmail, UserName = adminEmail, UserRole = "admin"};
+                ApplicationUser admin = new ApplicationUser {Email = adminEmail, UserName = adminEmail};
                 await userManager.CreateAsync(admin, password);
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)

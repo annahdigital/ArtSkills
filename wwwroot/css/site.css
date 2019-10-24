@@ -69,3 +69,88 @@ body {
     height: 110px;
     object-fit: cover;
 }
+
+/* ============== Post ============== */
+
+.post {
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.post-owner > a {
+    display: inline-block;
+    color: #000000;
+    font-size: 16px;
+    margin: 5px 0;
+    font-weight: 600;
+}
+
+.post-owner-photo {
+    width: 80px;
+    height: 80px;
+    border: 5px solid #fff;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+
+.post-owner > a:hover {
+    color: #00838f;
+}
+
+.post-date {
+    display: inline-block;
+    color: #000000;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.post-text {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.add-post-button {
+    background-color: #006064;
+    float: right;
+    margin-bottom: 20px;
+}
+
+#postTextArea {
+    resize: vertical;
+}
+
+.delete-post-button {
+    color: #25567B;
+    padding: 5px;
+    float: right;
+    border: none;
+    background-color: #FFF;
+}
+
+.post-likes {
+    float: right;
+    margin-bottom: 10px;
+}
+
+    .post-likes > .not-liked {
+        background-color: #006064;
+        color: #FFF;
+    }
+
+        .post-likes > .not-liked:hover {
+            background-color: #FF1122;
+            color: #FFF;
+        }
+
+    .post-likes > .liked {
+        background-color: #FF1122;
+        color: #FFF;
+    }
+
+        .post-likes > .liked:hover {
+            background-color: #006064;
+            color: #FFF;
+        }
+

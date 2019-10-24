@@ -36,8 +36,8 @@ namespace ArtSkills.Controllers
         public async Task<IActionResult> Index()
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            List<Art> arts = applicationDbContext.Arts.ToList();
-            user.Arts = arts;
+            //List<Art> arts = applicationDbContext.Arts.ToList();
+            //user.Arts = arts;
             //applicationDbContext.Entry(user).Collection(u => u.Arts).Load();
             return View(user);
         }
@@ -86,7 +86,7 @@ namespace ArtSkills.Controllers
             }
             var art = user.PostArt(name, description, path);
             await _userManager.UpdateAsync(user);
-            applicationDbContext.Arts.Add(art);
+            //applicationDbContext.Arts.Add(art);
             applicationDbContext.SaveChanges();
             return RedirectToAction("Index");
         }

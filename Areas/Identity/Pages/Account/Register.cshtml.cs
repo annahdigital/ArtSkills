@@ -79,7 +79,6 @@ namespace ArtSkills.Areas.Identity.Pages.Account
                     if (!(await _roleManager.RoleExistsAsync("user")))
                         await _roleManager.CreateAsync(new IdentityRole("user"));
                     await _userManager.AddToRoleAsync(user, "user");
-                    user.UserRole = "user";
                     await _userManager.UpdateAsync(user);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
