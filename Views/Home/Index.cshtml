@@ -1,11 +1,33 @@
-﻿@{
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
+@inject UserManager<ApplicationUser> UserManager
+@model List<Art>
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <img src="~/Resources/kitty.png" style="padding: 10px;"/>
+<div class="text-center bg-image">
+    <img src="~/Resources/kitty.png" style="padding: 10px;" />
     <h1 class="display-4">Welcome home!</h1>
     <p>Challenge your ArtSkills now!</p>
-    <hr/>
+    <hr />
 </div>
+
+@if (Model.Count != 0)
+{
+    <div class="container-fluid posts-container">
+        @foreach (var Art in @Model.OrderByDescending(a => a.PublishDate))
+        {
+            @await Html.PartialAsync("Art", Art)
+            <hr />
+        }
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1>No arts yet! :c </h1>
+    </div>
+}

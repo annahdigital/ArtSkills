@@ -19,10 +19,7 @@ namespace ArtSkills.Controllers
         }
         public IActionResult Index()
         {
-            /*if (applicationDbContext.Arts.ToList().Count == 0)
-                return RedirectToAction("ErrorWhileLoading", "Home");
-            else return View(applicationDbContext.Arts.ToList());*/
-            return View();
+            return View(applicationDbContext.Arts.ToList());
         }
 
         public IActionResult Privacy()

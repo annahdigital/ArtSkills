@@ -91,5 +91,13 @@ namespace ArtSkills.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> deleteArt(Art art)
+        {
+            var artist = art.ApplicationUser;
+            artist.Arts.Remove(art);
+            await _userManager.UpdateAsync(artist);
+            return RedirectToAction("Index");
+        }
+
     }
 }

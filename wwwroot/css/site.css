@@ -85,15 +85,6 @@ body {
     font-weight: 600;
 }
 
-.post-owner-photo {
-    width: 80px;
-    height: 80px;
-    border: 5px solid #fff;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-    border-radius: 100px;
-}
-
 .post-owner > a:hover {
     color: #00838f;
 }
@@ -111,22 +102,20 @@ body {
     font-weight: 200;
 }
 
-.add-post-button {
-    background-color: #006064;
-    float: right;
-    margin-bottom: 20px;
-}
-
 #postTextArea {
     resize: vertical;
 }
 
 .delete-post-button {
-    color: #25567B;
+    color: #F7CEDE;
+    width: 16px;
+    height: 16px;
     padding: 5px;
+    margin: 5px;
     float: right;
     border: none;
-    background-color: #FFF;
+    background-color: #F7CEDE;
+    background-image: url('../Resources/delete.png')
 }
 
 .post-likes {
@@ -153,4 +142,10 @@ body {
             background-color: #006064;
             color: #FFF;
         }
+
+.responsive {
+    width: 100%;
+    height: auto;
+    max-width: 700px;
+}
 

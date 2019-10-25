@@ -7,18 +7,19 @@
     Layout = "_Layout.cshtml";
 }
 
-        @if (Model.Arts.Count == 0)
+@if (Model.Arts.Count != 0)
+{
+    <div class="container-fluid posts-container">
+        @foreach (var Art in @Model.Arts.OrderByDescending(a => a.PublishDate))
         {
-            <h3>No posts yet! :c</h3>
+            @await Html.PartialAsync("Art", Art)
+            <hr />
         }
-        @if (Model.Arts.Count != 0)
-        {
-            foreach (var Art in Model.Arts)
-            {
-                @if (Art.ImagePath != null)
-                {
-                    <label>@Art.Name</label>
-                    <img src="@Art.ImagePath" />
-                }
-            }
-        }
+    </div>
+}
+else
+    {
+       <div class="text-center">
+            <h1>No arts yet! :c </h1>
+        </div>
+    }

@@ -6,7 +6,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="text-center">
+    <div class="text-center bg-image">
         @if (Model.UserPic == null)
         {
             <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
@@ -15,7 +15,14 @@
         {
             <img src="@Model.UserPic" class="img-circle" height="175" width="175" />
         }
-        <h1>@Model.artistNickname</h1>
+        @if (Model.artistNickname != null)
+        {
+            <h1>@Model.artistNickname</h1>
+        }
+        else
+        {
+            <h1>@Model.UserName</h1>
+        }
         <p>@Model.About</p>
         @if (Model.Id != UserManager.GetUserId(User))
         {
