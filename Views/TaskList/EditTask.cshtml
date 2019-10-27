@@ -1,0 +1,22 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ArtSkills.Models.Task
+@{
+    ViewData["Title"] = "EditTask";
+}
+
+    <div class="row">
+        <div class="col-3">
+            <button
+                    onclick="location.href='@Url.Action("DeleteTask", "TaskList", new { taskId = Model.Id, taskListID = Model.taskList.Id})'"
+                    class="delete-post-button"/>
+        </div>
+        <div class="col-6">
+                <p>@Model.Name</p>
+        </div>
+    </div>
+  
+
+
+

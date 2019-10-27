@@ -14,9 +14,10 @@ namespace ArtSkills.Models
 
         public virtual TaskList taskList { get; set; }
 
-        public Task(string name)
+        public Task(string name, TaskList taskList)
         {
             this.Name = name;
+            this.taskList = taskList;
         }
 
         public Task() { }

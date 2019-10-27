@@ -1,0 +1,56 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model TaskList
+@{
+    ViewData["Title"] = "TaskList";
+}
+    <div class="container-fluid extrarounded bg-lighttt" style="padding-bottom:20px; padding-top: 10px;">
+        <div class="row">
+            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+            {
+                <div class="col-md-12">
+                    <button postId="@Model.Id" class="delete-tasklist-button" type="submit"
+                            onclick="location.href='@Url.Action("DeleteTaskList", "TaskList", new { taskListID = Model.Id })'"></button>
+                </div>
+            }
+        </div>
+        <div class="text-center">
+            <h2>@Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })</h2>
+            <hr />
+        </div>
+        <div class="col-4 offset-4 text-center">
+
+            @if (Model.Status == true)
+            {
+                <p>@Model.StartDate.ToString("dd/MM/yyyy") - @Model.EndDate.ToString("dd/MM/yyyy")</p>
+            }
+            else
+            {
+                <p>@Model.StartDate.ToString("dd/MM/yyyy") - ...</p>
+            }
+            <div class="container-fluid extrarounded bg-extralighttt" style="margin-bottom:10px;">
+                <p>@Model.Description</p>
+            </div>
+            <hr />
+
+            @if (Model.Tasks.Count == 0)
+            {
+                <p>No tasks yet! Edit your tasklist!</p>
+            }
+            else
+            {
+                @foreach (var Task in @Model.Tasks)
+                {
+                    { await Html.RenderPartialAsync("Task.cshtml", @Task); }
+                }
+            }
+            <hr />
+            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+            {
+                <div class="container-fluid extrarounded bg-extralighttt" style="margin-bottom:10px;">
+                    <p>@Html.ActionLink("Edit", "EditTaskList", "TaskList", new { taskListID = @Model.Id })<p>
+                </div>
+            }
+        </div>
+    </div>

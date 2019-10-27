@@ -1,0 +1,19 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "TaskListIndex";
+    Layout = "_Layout.cshtml";
+}
+
+@if (Model.TaskLists.Count != 0)
+{
+        {await Html.RenderPartialAsync("~/Views/TaskList/TaskListsCollection.cshtml", @Model.TaskLists.OrderByDescending(a => a.StartDate).ToList());}
+}
+else
+{
+    <div class="text-center">
+        <h1>No task lists yet! :c </h1>
+    </div>
+}

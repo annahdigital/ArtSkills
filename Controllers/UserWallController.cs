@@ -120,5 +120,36 @@ namespace ArtSkills.Controllers
             applicationDbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> AddTaskList()
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTaskList(string name, string description)
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            var taskList = new TaskList(name, user, description);
+            applicationDbContext.TaskLists.Add(taskList);
+            applicationDbContext.SaveChanges();
+            var list = user.TaskLists.ToList().Find(x => x.Name == name && x.Description == description);
+            return RedirectToAction("TaskList", "TaskList", new { taskListId = list.Id });
+        }
+
+        public async Task<IActionResult> TaskListIndex(string Id)
+        {
+            if (Id == null)
+            {
+                ApplicationUser user = await GetCurrentUserAsync();
+                return View(user);
+            }
+            else
+            {
+                ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
+                return View(user);
+            }
+        }
     }
 }

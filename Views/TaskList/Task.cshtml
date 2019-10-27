@@ -1,0 +1,25 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ArtSkills.Models.Task
+@{
+    ViewData["Title"] = "Task";
+}
+
+<div class="row">
+    <div class="col-3">
+        @if (Model.Status == true)
+        {
+            <button onclick="location.href='@Url.Action("UncheckTask", "TaskList", new { taskId = Model.Id, taskListID = Model.taskList.Id})'"
+                    class="complete-tasklist-button" />
+        }
+        else
+        {
+            <button onclick="location.href='@Url.Action("CheckTask", "TaskList", new { taskId = Model.Id, taskListID = Model.taskList.Id})'"
+                    class="uncomplete-tasklist-button" />
+        }
+    </div>
+    <div class="col-6">
+        <p>@Model.Name</p>
+    </div>
+</div>

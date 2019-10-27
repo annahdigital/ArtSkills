@@ -20,28 +20,32 @@ namespace ArtSkills.Models
         [NotMapped]
         public bool Status => Percentage >= 100;
         [NotMapped]
-        public double Percentage => Completed / Tasks.Count * 100;
+        public double Percentage
+        {
+            get
+            {
+                if (Tasks.Count != 0)
+                    return Completed / Tasks.Count * 100;
+                else return 0;
+            }
+        }
 
         public TaskList()
         {
             Tasks = new List<Task>();
         }
 
-        public void SaveTaskList(String name, ApplicationUser creator, string description)
+        public TaskList(String name, ApplicationUser creator, string description)
         {
             this.Name = name;
             this.ApplicationUser = creator;
             this.Description = description;
+            this.StartDate = DateTime.Now;
         }
 
         public void AddTask(string taskName)
         {
-            Tasks.Add(new Task(taskName));
-        }
-
-        public void StartTaskList()
-        {
-            StartDate = DateTime.Now;
+            Tasks.Add(new Task(taskName, this));
         }
 
         public bool CompleteTask(int index)
@@ -50,7 +54,6 @@ namespace ArtSkills.Models
             Completed++;
             if (Percentage < 100)
             {
-                // send message!!!
                 return false;
             }
             else

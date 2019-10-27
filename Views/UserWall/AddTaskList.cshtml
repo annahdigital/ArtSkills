@@ -3,30 +3,23 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Add tasklist";
-    Layout = "_Layout.cshtml";
 }
 
 <div class="col-4 offset-4 text-center">
     <h3>Adding tasklist</h3>
     <hr />
 
-    <form asp-action="AddArt" method="post" enctype="multipart/form-data">
+    <form asp-action="AddTaskList" method="post">
         <fieldset>
-            <legend>Name of the art</legend>
+            <legend>Name of the taskList</legend>
             <input name="name" class="form-control bg-white" required />
         </fieldset>
-
-        <fieldset>
-            <legend>Load a picture</legend>
-            <input name="pictureUrl" type="file" class="form-control" required />
-        </fieldset>
-        <hr />
         <fieldset>
             <legend>Description</legend>
             <textarea name="Description" rows="5" cols="44"> </textarea>
         </fieldset>
         <hr />
-        <button type="submit" class="btn btn-primary">Add art</button>
+        <button type="submit" class="btn btn-primary">Add taskList</button>
 
     </form>
 </div>

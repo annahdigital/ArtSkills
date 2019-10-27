@@ -50,7 +50,9 @@
                 <form method="get" asp-controller="UserWall" asp-action="AddArt">
                     <button id="addArt" class="btn btn-primary">Load art</button>
                 </form>
-                <button id="add_tasklist" onclick="redirect" type="submit" class="btn btn-primary">Add tasklist</button>
+                <form method="get" asp-controller="UserWall" asp-action="AddTaskList">
+                    <button id="add_tasklist" class="btn btn-primary">Add tasklist</button>
+                </form>
                 <form method="get" asp-controller="UserWall" asp-action="UploadUserPic">
                     <button id="uploadUserPic" class="btn btn-primary">Change avatar</button>
                 </form>

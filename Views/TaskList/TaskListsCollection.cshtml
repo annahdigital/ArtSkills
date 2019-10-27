@@ -1,0 +1,19 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model List<TaskList>
+@{
+    ViewData["Title"] = "TaskListsCollection";
+}
+
+<div class="text-center bg-image">
+    <h3>My task lists</h3>
+    <hr />
+</div>
+<div class="container-fluid">
+    @foreach (var TaskList in @Model)
+        {
+            {await Html.RenderPartialAsync("TaskList.cshtml", @TaskList);}
+             <hr />
+        }
+</div>

@@ -414,3 +414,51 @@ body {
     max-width: 700px;
 }
 
+.delete-tasklist-button {
+    color: #F7CEDE;
+    width: 16px;
+    height: 16px;
+    padding: 5px;
+    margin: 5px;
+    float: right;
+    border: none;
+    background-color: #F7CEDE;
+    background-image: url('../Resources/delete.png')
+}
+
+.uncomplete-tasklist-button {
+    color: #F7CEDE;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    margin: 5px;
+    float: right;
+    border: none;
+    background-color: #F7CEDE;
+    background-image: url('../Resources/unchecked.png')
+}
+
+.complete-tasklist-button {
+    color: #F7CEDE;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    margin: 5px;
+    float: right;
+    border: none;
+    background-color: #F7CEDE;
+    background-image: url('../Resources/check.png')
+}
+
+.add-task-button {
+    color: #F7CEDE;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    margin: 5px;
+    float: right;
+    border: none;
+    background-color: #F7CEDE;
+    background-image: url('../Resources/plus.png')
+}
+
