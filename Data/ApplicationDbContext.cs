@@ -18,6 +18,9 @@ namespace ArtSkills.Data
 
         public DbSet<Art> Arts { get; set; }
         public DbSet<TaskList> TaskLists { get; set; }
+        public DbSet<FollowArtist> FollowArtists { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -9,17 +9,13 @@
 
 @if (Model.Arts.Count != 0)
 {
-    <div class="container-fluid posts-container">
-        @foreach (var Art in @Model.Arts.OrderByDescending(a => a.PublishDate))
-        {
-            @await Html.PartialAsync("Art", Art)
-            <hr />
-        }
+    <div class="posts" id="postsArea">
+        @{await Html.RenderPartialAsync("~/Views/Art/ArtsCollection.cshtml", @Model.Arts.OrderByDescending(a => a.PublishDate).ToList());}
     </div>
 }
 else
-    {
-       <div class="text-center">
-            <h1>No arts yet! :c </h1>
-        </div>
-    }
+{
+    <div class="text-center">
+        <h1>No arts yet! :c </h1>
+    </div>
+}

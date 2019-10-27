@@ -6607,6 +6607,10 @@ button.bg-dark:focus {
     background-color: #F7CEDE !important;
 }
 
+.bg-extralighttt {
+    background-color: #F7DEE8 !important;
+}
+
 .bg-image {
     background-image: url('../../../../Resources/background-1.jpg')
 }

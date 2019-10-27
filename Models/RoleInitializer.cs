@@ -28,6 +28,7 @@ namespace ArtSkills.Models
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                     await userManager.AddToRoleAsync(admin, "admin");
+                await userManager.UpdateAsync(admin);
             }
         }
     }

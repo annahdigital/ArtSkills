@@ -33,13 +33,24 @@ namespace ArtSkills.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            //List<Art> arts = applicationDbContext.Arts.ToList();
-            //user.Arts = arts;
-            //applicationDbContext.Entry(user).Collection(u => u.Arts).Load();
             return View(user);
+        }*/
+
+        public async Task<IActionResult> Index(string Id)
+        {
+            if (Id == null)
+            {
+                ApplicationUser user = await GetCurrentUserAsync();
+                return View(user);
+            }
+            else
+            {
+                ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
+                return View(user);
+            }
         }
 
         public async Task<IActionResult> About()
@@ -91,13 +102,41 @@ namespace ArtSkills.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> deleteArt(Art art)
+        /*public async Task<IActionResult> DeleteArt(String artID)
         {
-            var artist = art.ApplicationUser;
-            artist.Arts.Remove(art);
-            await _userManager.UpdateAsync(artist);
+            Art art = applicationDbContext.Arts.Find(artID);
+            applicationDbContext.Remove(art);
+            await applicationDbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> LikeArt(String artID)
+        {
+            Art art = applicationDbContext.Arts.Find(artID);
+            ApplicationUser user = await GetCurrentUserAsync();
+            var like = new Like(user, art);
+            if (user.Likes.ToList().Find(x => x.Art.Id == artID) == null)
+            {
+                applicationDbContext.Likes.Add(like);
+                art.Likes.Add(like);
+                user.Likes.Add(like);
+                await applicationDbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UnlikeArt(String artID)
+        {
+            Art art = applicationDbContext.Arts.Find(artID);
+            ApplicationUser user = await GetCurrentUserAsync();
+            if (user.Likes.ToList().Find(x => x.Art.Id == artID) != null)
+            {
+                applicationDbContext.Remove(user.Likes.ToList().Find(x => x.Art.Id == artID));
+                await applicationDbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }*/
+
 
     }
 }

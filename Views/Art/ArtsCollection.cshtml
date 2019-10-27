@@ -1,0 +1,15 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model List<Art>
+@{
+    ViewData["Title"] = "ArtsCollection";
+}
+
+    <div class="container-fluid posts-container">
+        @foreach (var Art in @Model)
+        {
+            {await Html.RenderPartialAsync("Art.cshtml", @Art);}
+            <hr />
+        }
+    </div>
