@@ -33,11 +33,30 @@ namespace ArtSkills.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Followers(string Id)
+        {
+            ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
+            return View(user);
+        }
+
+        public async Task<IActionResult> FollowUser(string Id)
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            return View(user);
-        }*/
+            ApplicationUser artist = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
+            var FollowForm = new FollowArtist(artist, user);
+            applicationDbContext.FollowArtists.Add(FollowForm);
+            applicationDbContext.SaveChanges();
+            return RedirectToAction("Index", new { Id });
+        }
+
+        public async Task<IActionResult> UnfollowUser(string Id)
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            var FollowForm = user.Following.ToList().Find(x => x.FollowerId == user.Id);
+            applicationDbContext.FollowArtists.Remove(FollowForm);
+            applicationDbContext.SaveChanges();
+            return RedirectToAction("Index", new { Id });
+        }
 
         public async Task<IActionResult> Index(string Id)
         {
@@ -53,9 +72,9 @@ namespace ArtSkills.Controllers
             }
         }
 
-        public async Task<IActionResult> About()
+        public async Task<IActionResult> About(string Id)
         {
-            ApplicationUser user = await GetCurrentUserAsync();
+            ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
             return View(user);
         }
 

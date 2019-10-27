@@ -12,13 +12,13 @@
             <div class="col-md-2">
                 @if (Model.ApplicationUser.UserPic != null)
                 {
-                    <img class="img-circle" height="90" width="90" src="@Model.ApplicationUser.UserPic" />
+                    <img class="img-circle" style="margin:10px;" height="90" width="90" src="@Model.ApplicationUser.UserPic" />
                 }
                 else
                 {
-                    <img class="img-circle" height="90" width="90" src="~/Resources/kittyspace.png" />
+                    <img class="img-circle" style="margin:10px;" height="90" width="90" src="~/Resources/kittyspace.png" />
                 }
-                <div class="post-owner">
+                <div class="post-owner" style="margin-left: 12px;">
                     @if (@Model.ApplicationUser.artistNickname != null)
                     {
                         @Html.ActionLink(@Model.ApplicationUser.artistNickname, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
@@ -94,11 +94,11 @@
             <div class="text-right">@Model.Likes.Count</div>
         </div>
 
-        <div class="container-fluid commentsArea">
+        <div class="container-fluid commentsArea" style="width: 700px;">
             @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
         </div>
 
-        <div class="container-fluid comment-sending-area">
+        <div class="container-fluid comment-sending-area" style="width: 700px;">
             <div class="row">
                 <div class="col-md-11">
                     <textarea class="form-control comment-sending-form"

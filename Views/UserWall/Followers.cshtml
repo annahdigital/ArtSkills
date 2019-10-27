@@ -1,0 +1,52 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model ApplicationUser
+@{
+    ViewData["Title"] = "Followers";
+}
+
+<div class="text-center bg-image">
+    <h2>Followers</h2>
+    <hr />
+</div>
+
+@if (Model.FollowedBy.Count != 0)
+{
+    <div class="followers-list">
+        <div class="row">
+            @foreach (var follower in Model.FollowedBy)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="follower-info full-width extrarounded">
+                        <div class="follower-up-info">
+                            @if (follower.Follower.UserPic == null)
+                            {
+                                <img src="~/Resources/kittyspace.png" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content(follower.Follower.UserPic)" />
+                            }
+                        </div>
+                        @if (follower.Follower.artistNickname != null)
+                        {
+                            @Html.ActionLink(follower.Follower.artistNickname, "Index", "UserWall", new { Id = follower.Follower.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink(follower.Follower.UserName, "Index", "UserWall", new { Id = follower.Follower.Id })
+                        }
+                    </div>
+                </div>
+                
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h4>No followers yet!</h4>
+    </div>
+}

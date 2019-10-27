@@ -24,9 +24,25 @@
             <h1>@Model.UserName</h1>
         }
         <p>@Model.About</p>
+        <p>Followers: @Model.FollowedBy.Count</p>
         @if (Model.Id != UserManager.GetUserId(User))
         {
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Follow user</button>
+            if (Model.FollowedBy.ToList().Find(x => x.FollowerId == UserManager.GetUserId(User)) != null)
+            {
+                <button id="remove-follower-button"
+                        onclick="location.href='@Url.Action("UnfollowUser", "UserWall", new { Id = Model.Id })'"
+                        class="btn btn-primary">
+                    Unfollow user
+                </button>
+            }
+            else
+            {
+                <button id="update-profile-button"
+                        onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.Id })'"
+                        class="btn btn-primary">
+                    Follow user
+                </button>
+            }
         }
         @if (Model.Id == UserManager.GetUserId(User))
         {

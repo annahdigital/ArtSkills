@@ -263,6 +263,150 @@ body {
     margin-left: 5px;
 }
 
+.followers-main {
+    position: -webkit-sticky;
+    display: block;
+    position: sticky;
+    top: 70px;
+}
+
+.followers-main-title {
+    float: left;
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+    .followers-main-title h3 {
+        color: #000000;
+        font-size: 18px;
+        font-weight: 600;
+        float: left;
+    }
+
+    .followers-main-title > h3 > span {
+        color: #006064;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.followers-main-list {
+    float: left;
+    width: 100%;
+}
+
+.followers-main-usd {
+    float: left;
+    width: 100%;
+    padding: 15px 20px;
+}
+
+    .followers-main-usd img {
+        width: 40px;
+        height: 40px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        border-radius: 100px;
+    }
+
+.followers-text {
+    float: left;
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+    .followers-text > a:hover {
+        color: #006064
+    }
+
+    .followers-text a {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+.view-more {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid #e5e5e5;
+}
+
+    .view-more > a {
+        color: #006064;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+        .view-more > a:hover {
+            color: #e44d3a
+        }
+
+
+/* ============== followers-info ============== */
+
+
+.main-title {
+    color: #000000;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.followers-title {
+    color: #000000;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.followers-list {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.follower-info {
+    float: left;
+    width: 200px;
+    background-color: #F7DEE8;
+    text-align: center;
+    border-left: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 30px;
+}
+
+.follower-up-info {
+    float: left;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+    .follower-up-info > img {
+        float: none;
+        border-radius: 100px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+.follower-info > a {
+    display: inline-block;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 0;
+}
+
+    .follower-info > a:hover {
+        color: #00838f;
+    }
+
 
 .responsive {
     width: 100%;
