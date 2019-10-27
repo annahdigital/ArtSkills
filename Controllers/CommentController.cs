@@ -24,7 +24,7 @@ namespace ArtSkills.Controllers
         IHostingEnvironment _environment;
 
         public CommentController(UserManager<ApplicationUser> userManager, ApplicationDbContext context,
-IHostingEnvironment environment)
+        IHostingEnvironment environment)
         {
             _userManager = userManager;
             applicationDbContext = context;
@@ -33,9 +33,20 @@ IHostingEnvironment environment)
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public IActionResult Index(string Id)
+        public IActionResult Comment(string Id)
         {
-            return View();
+            Comment comment = applicationDbContext.Comments.Find(Id);
+            return View(comment);
         }
+
+        public async Task<IActionResult> DeleteComment(String artID, String commentId)
+        {
+            Comment comment = applicationDbContext.Comments.Find(commentId);
+            applicationDbContext.Remove(comment);
+            applicationDbContext.SaveChanges();
+            return RedirectToAction("Art", "Art", new { artID });
+        }
+
+
     }
 }

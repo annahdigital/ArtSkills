@@ -166,7 +166,7 @@ body {
 .commentsArea {
     float: right;
     width: 70%;
-    background-color: #fff;
+    background-color: #F7DEE8;
     margin-bottom: 10px;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
@@ -176,13 +176,15 @@ body {
 }
 
 .delete-comment-button {
-    color: #25567B;
+    color: #F7DEE8;
+    width: 16px;
+    height: 16px;
     padding: 5px;
+    margin: 5px;
     float: right;
     border: none;
-    font-weight: 200;
-    font-size: x-small;
-    background-color: #FFF;
+    background-color: #F7DEE8;
+    background-image: url('../Resources/delete.png')
 }
 
 .comment-owner > a {
@@ -223,7 +225,7 @@ body {
 .comment-sending-area {
     float: right;
     width: 70%;
-    background-color: #fff;
+    background-color: #F7DEE8;
     margin-bottom: 20px;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
@@ -235,7 +237,7 @@ body {
 .comment-sending-form {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: #F7DEE8;
     color: #b2b2b2;
     font-size: 12px;
     padding: 5px 10px 0 10px;
@@ -246,11 +248,15 @@ body {
 }
 
 .add-comment-button {
-    color: #25567B;
-    padding: 12px 10px;
+    color: #F7DEE8;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    margin: 5px;
     float: right;
     border: none;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: #F7DEE8;
+    background-image: url('../Resources/plus.png')
 }
 
 .no-comments {

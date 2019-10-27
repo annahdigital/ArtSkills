@@ -33,10 +33,10 @@ IHostingEnvironment environment)
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public IActionResult Index(string artID)
+        /*public IActionResult Index(string artID)
         {
             return View(applicationDbContext.Arts.ToList());
-        }
+        }*/
 
         public IActionResult Art(string artID)
         {
@@ -87,6 +87,21 @@ IHostingEnvironment environment)
             if (user.Likes.ToList().Find(x => x.Art.Id == artID) != null)
             {
                 applicationDbContext.Remove(user.Likes.ToList().Find(x => x.Art.Id == artID));
+                await applicationDbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Art", "Art", new { artID });
+        }
+
+        public async Task<IActionResult> CommentArt(String artID, string text)
+        {
+            if (text != null)
+            {
+                Art art = applicationDbContext.Arts.Find(artID);
+                ApplicationUser user = await GetCurrentUserAsync();
+                var comment = new Comment(user, art, text);
+                applicationDbContext.Comments.Add(comment);
+                art.Comments.Add(comment);
+                user.Comments.Add(comment);
                 await applicationDbContext.SaveChangesAsync();
             }
             return RedirectToAction("Art", "Art", new { artID });

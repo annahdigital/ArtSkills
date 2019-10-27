@@ -101,42 +101,5 @@ namespace ArtSkills.Controllers
             applicationDbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        /*public async Task<IActionResult> DeleteArt(String artID)
-        {
-            Art art = applicationDbContext.Arts.Find(artID);
-            applicationDbContext.Remove(art);
-            await applicationDbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> LikeArt(String artID)
-        {
-            Art art = applicationDbContext.Arts.Find(artID);
-            ApplicationUser user = await GetCurrentUserAsync();
-            var like = new Like(user, art);
-            if (user.Likes.ToList().Find(x => x.Art.Id == artID) == null)
-            {
-                applicationDbContext.Likes.Add(like);
-                art.Likes.Add(like);
-                user.Likes.Add(like);
-                await applicationDbContext.SaveChangesAsync();
-            }
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> UnlikeArt(String artID)
-        {
-            Art art = applicationDbContext.Arts.Find(artID);
-            ApplicationUser user = await GetCurrentUserAsync();
-            if (user.Likes.ToList().Find(x => x.Art.Id == artID) != null)
-            {
-                applicationDbContext.Remove(user.Likes.ToList().Find(x => x.Art.Id == artID));
-                await applicationDbContext.SaveChangesAsync();
-            }
-            return RedirectToAction("Index");
-        }*/
-
-
     }
 }

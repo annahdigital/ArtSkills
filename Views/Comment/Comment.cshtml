@@ -6,3 +6,61 @@
     ViewData["Title"] = "Comment";
 }
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                @if (Model.ApplicationUser.UserPic != null)
+                {
+                    <img class="img-circle" height="70" width="70" src="@Model.ApplicationUser.UserPic" />
+                }
+                else
+                {
+                    <img class="img-circle" height="70" width="70" src="~/Resources/kittyspace.png" />
+                }
+            </div>
+            <div class="col-md-8">
+                <div class="comment-owner">
+                    @if (@Model.ApplicationUser.artistNickname != null)
+                    {
+                        @Html.ActionLink(@Model.ApplicationUser.artistNickname, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink(@Model.ApplicationUser.UserName, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
+                    }
+                </div>
+                <div class="comment-date">
+                    @Model.CommentDate
+                </div>
+            </div>
+            @{
+                var currentUser = (await UserManager.FindByIdAsync(UserManager.GetUserId(User)));
+                var verified = false;
+                if (currentUser != null)
+                {
+                    if ((await UserManager.IsInRoleAsync(currentUser, "admin")) || (await UserManager.IsInRoleAsync(currentUser, "moderator")))
+                    {
+                        verified = true;
+                    }
+                }
+            }
+            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User) || verified == true)
+            {
+                <div class="col-md-2">
+                    <button commentId="@Model.Id" postId="@Model.Art.Id"
+                            onclick="location.href='@Url.Action("DeleteComment", "Comment", new { artID = Model.Art.Id, commentId = Model.Id})'"
+                            class="delete-comment-button"></button>
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <div class="comment-text">
+                    @Model.CommentText
+                </div>
+            </div>
+        </div>
+    </div>

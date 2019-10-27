@@ -6,111 +6,119 @@
     ViewData["Title"] = "Art";
 }
 
-    <div class="post full-width">
-        <div class="container-fluid extrarounded bg-lighttt">
-            <div class="row">
-                <div class="col-md-2">
-                    @if (Model.ApplicationUser.UserPic != null)
+<div class="post full-width">
+    <div class="container-fluid extrarounded bg-lighttt">
+        <div class="row">
+            <div class="col-md-2">
+                @if (Model.ApplicationUser.UserPic != null)
+                {
+                    <img class="img-circle" height="90" width="90" src="@Model.ApplicationUser.UserPic" />
+                }
+                else
+                {
+                    <img class="img-circle" height="90" width="90" src="~/Resources/kittyspace.png" />
+                }
+                <div class="post-owner">
+                    @if (@Model.ApplicationUser.artistNickname != null)
                     {
-                        <img class="img-circle" height="90" width="90" src="@Model.ApplicationUser.UserPic" />
+                        @Html.ActionLink(@Model.ApplicationUser.artistNickname, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
+
                     }
                     else
                     {
-                        <img class="img-circle" height="90" width="90" src="~/Resources/kittyspace.png" />
+                        @Html.ActionLink(@Model.ApplicationUser.UserName, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
                     }
-                    <div class="post-owner">
-                        @if (@Model.ApplicationUser.artistNickname != null)
-                        {
-                            @Html.ActionLink(@Model.ApplicationUser.artistNickname, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
-
-                        }
-                        else
-                        {
-                            @Html.ActionLink(@Model.ApplicationUser.UserName, "Index", "UserWall", new { Id = @Model.ApplicationUser.Id })
-                        }
-                    </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="text-center">
-                        <h3>@Html.ActionLink(@Model.Name, "Art", "Art", new { artID = @Model.Id })</h3>
-                        <p>@Model.PublishDate</p>
-                        <hr />
-                    </div>
-                    <img class="responsive rounded" src="@Model.ImagePath" />
-                    <div class="container-fluid bg-extralighttt text-center post-text extrarounded">
-                        @Model.Description
-                    </div>
-                </div>
-                @{
-                    var currentUser = (await UserManager.FindByIdAsync(UserManager.GetUserId(User)));
-                    var verified = false;
-                    if (currentUser != null)
-                    {
-                        /*if ((await UserManager.GetRolesAsync(currentUser)).Contains("moderator") || (await UserManager.GetRolesAsync(currentUser)).Contains("admin"))
-                        {
-                            verified = true;
-                        }*/
-                        if ((await UserManager.IsInRoleAsync(currentUser, "admin")) || (await UserManager.IsInRoleAsync(currentUser, "moderator")))
-                        {
-                            verified = true;
-                        }
-                    }
-                }
-                @if (Model.ApplicationUser.Id == UserManager.GetUserId(User) || verified == true)
-                {
-                    <div class="col-md-2">
-
-                        <button postId="@Model.Id" class="delete-post-button" type="submit"
-                                onclick="location.href='@Url.Action("DeleteArt", "Art", new { artID = Model.Id })'"></button>
-                    </div>
-                }
             </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
-                    <div class="post-likes">
-                        @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+            <div class="col-md-8">
+                <div class="text-center">
+                    <h3>@Html.ActionLink(@Model.Name, "Art", "Art", new { artID = @Model.Id })</h3>
+                    <p>@Model.PublishDate</p>
+                    <hr />
+                </div>
+                <img class="responsive rounded" src="@Model.ImagePath" />
+                <div class="container-fluid bg-extralighttt text-center post-text extrarounded">
+                    @Model.Description
+                </div>
+            </div>
+            @{
+                var currentUser = (await UserManager.FindByIdAsync(UserManager.GetUserId(User)));
+                var verified = false;
+                if (currentUser != null)
+                {
+                    if ((await UserManager.IsInRoleAsync(currentUser, "admin")) || (await UserManager.IsInRoleAsync(currentUser, "moderator")))
+                    {
+                        verified = true;
+                    }
+                }
+            }
+            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User) || verified == true)
+            {
+                <div class="col-md-2">
+
+                    <button postId="@Model.Id" class="delete-post-button" type="submit"
+                            onclick="location.href='@Url.Action("DeleteArt", "Art", new { artID = Model.Id })'"></button>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <div class="post-likes">
+                    @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+                    {
+                        <div class="btn post-like-button not-liked" postId="@Model.Id" />
+                    }
+                    else
+                    {
+                        if (UserManager.GetUserId(User) != null)
                         {
-                            <div class="btn post-like-button not-liked" postId="@Model.Id" />
-                        }
-                        else
-                        {
-                            if (UserManager.GetUserId(User) != null)
+                            if ((await UserManager.FindByIdAsync(UserManager.GetUserId(User))).Likes.ToList().Find(x => x.Art == Model) != null)
                             {
-                                if ((await UserManager.FindByIdAsync(UserManager.GetUserId(User))).Likes.ToList().Find(x => x.Art == Model) != null)
-                                {
-                                    <div class="btn post-like-button liked" postId="@Model.Id"
-                                         onclick="location.href='@Url.Action("UnlikeArt", "Art", new { artID = Model.Id })'" />
-                                }
-                                else
-                                {
-                                    <div class="btn post-like-button not-liked" postId="@Model.Id"
-                                         onclick="location.href='@Url.Action("LikeArt", "Art", new { artID = Model.Id })'" />
-                                }
+                                <div class="btn post-like-button liked" postId="@Model.Id"
+                                     onclick="location.href='@Url.Action("UnlikeArt", "Art", new { artID = Model.Id })'" />
                             }
                             else
                             {
-                                <div class="btn post-like-button not-liked" postId="@Model.Id" />
+                                <div class="btn post-like-button not-liked" postId="@Model.Id"
+                                     onclick="location.href='@Url.Action("LikeArt", "Art", new { artID = Model.Id })'" />
                             }
                         }
-                    </div>
+                        else
+                        {
+                            <div class="btn post-like-button not-liked" postId="@Model.Id" />
+                        }
+                    }
                 </div>
-                <div class="text-right">@Model.Likes.Count</div>
             </div>
+            <div class="text-right">@Model.Likes.Count</div>
+        </div>
 
-            <div class="commentsArea">
-                @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
-            </div>
+        <div class="container-fluid commentsArea">
+            @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
+        </div>
 
-            <div class="container-fluid comment-sending-area">
-                <div class="row">
-                    <div class="col-md-11">
-                        <textarea class="form-control comment-sending-form" commentForPost="@Model.Id" placeholder="Share your opinion!"></textarea>
-                    </div>
-                    <div class="col-md-1">
-                        <button postId="@Model.Id" class="glyphicon glyphicon-plus add-comment-button"></button>
-                    </div>
+        <div class="container-fluid comment-sending-area">
+            <div class="row">
+                <div class="col-md-11">
+                    <textarea class="form-control comment-sending-form"
+                              id="txtrev"
+                              placeholder="Share your opinion!"></textarea>
+                </div>
+                <div class="col-md-1">
+                    <button data-assigned-id="@Model.Id" class="add-comment-button"
+                            onclick="myFunction(this);"></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+ function myFunction(elem){
+      var id = $(elem).data('assigned-id');
+        var text = document.getElementById("txtrev").value;
+         
+        location.href = '@Url.Action("CommentArt", "Art")' + '?artID=' + id + '&text=' + text;
+    }
+</script>
