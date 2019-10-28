@@ -19,13 +19,14 @@ namespace ArtSkills.Models
 
         [NotMapped]
         public bool Status => Percentage >= 100;
+
         [NotMapped]
         public double Percentage
         {
             get
             {
                 if (Tasks.Count != 0)
-                    return Completed / Tasks.Count * 100;
+                    return 100*Completed / Tasks.Count;
                 else return 0;
             }
         }

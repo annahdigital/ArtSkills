@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "EditTaskList";
 }
-<div class="container-fluid extrarounded bg-lighttt" style="padding-bottom:20px; padding-top: 10px;">
+<div class="container-fluid extrarounded bg-lighttt" style="padding-bottom:20px; padding-top: 10px; width:70%;">
     <div class="row">
         @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
         {
@@ -15,8 +15,10 @@
             </div>
         }
         <div class="col-4 offset-4 text-center">
-            <h2>@Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })</h2>
+            <div class="tasklist-name">
+                @Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })
             <hr />
+            </div>
             @if (Model.Status == true)
             {
                 <p>@Model.StartDate.ToString("dd/MM/yyyy") - @Model.EndDate.ToString("dd/MM/yyyy")</p>

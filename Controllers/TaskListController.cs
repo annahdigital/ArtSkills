@@ -45,15 +45,34 @@ namespace ArtSkills.Controllers
             return View(taskList);
         }
 
-        public async Task<IActionResult> TaskListsCollection()
+        public IActionResult TaskListsCollection(string Id, bool completed)
         {
-            ApplicationUser user = await GetCurrentUserAsync();
-            if (user != null)
-                return PartialView(user.TaskLists.ToList());
+            ApplicationUser user = applicationDbContext.Users.Find(Id);
+            List<TaskList> taskslists;
+            if (completed)
+                taskslists = user.TaskLists.ToList().FindAll(x => x.Status == true);
             else
-            {
-                return RedirectToAction("Index", "Home", new { area = "" });
-            }
+                taskslists = user.TaskLists.ToList().FindAll(x => x.Status == false);
+            return View(taskslists);
+        }
+
+        public async Task<IActionResult> Completed(string Id)
+        {
+            return RedirectToAction("TaskListsCollection", "TaskList", new { Id, completed = true });
+        }
+
+        public async Task<IActionResult> InProgress(string Id)
+        {
+            return RedirectToAction("TaskListsCollection", "TaskList", new { Id, completed = false });
+        }
+
+        public async Task<IActionResult> DeleteTaskList(string taskListID)
+        {
+            var taskList = applicationDbContext.TaskLists.ToList().Find(x => x.Id == taskListID);
+            string userId = taskList.ApplicationUser.Id;
+            applicationDbContext.TaskLists.Remove(taskList);
+            await applicationDbContext.SaveChangesAsync();
+            return RedirectToAction("TaskListIndex", "UserWall", new { Id = userId });
         }
 
         public async Task<IActionResult> AddTask(string taskListID, string name)
@@ -77,18 +96,28 @@ namespace ArtSkills.Controllers
         public async Task<IActionResult> CheckTask(string taskId, string taskListID)
         {
             var taskList = applicationDbContext.TaskLists.ToList().Find(x => x.Id == taskListID);
-            var task = taskList.Tasks.Find(x => x.Id == taskId);
-            task.Status = true;
-            await applicationDbContext.SaveChangesAsync();
+            ApplicationUser user = await GetCurrentUserAsync();
+            if (user.Id == taskList.ApplicationUser.Id)
+            {
+                var task = taskList.Tasks.Find(x => x.Id == taskId);
+                task.Status = true;
+                taskList.Completed++;
+                await applicationDbContext.SaveChangesAsync();
+            }
             return RedirectToAction("TaskList", "TaskList", new { taskListID });
         }
 
         public async Task<IActionResult> UncheckTask(string taskId, string taskListID)
         {
             var taskList = applicationDbContext.TaskLists.ToList().Find(x => x.Id == taskListID);
-            var task = taskList.Tasks.Find(x => x.Id == taskId);
-            task.Status = false;
-            await applicationDbContext.SaveChangesAsync();
+            ApplicationUser user = await GetCurrentUserAsync();
+            if (user.Id == taskList.ApplicationUser.Id)
+            {
+                var task = taskList.Tasks.Find(x => x.Id == taskId);
+                task.Status = false;
+                taskList.Completed--;
+                await applicationDbContext.SaveChangesAsync();
+            }
             return RedirectToAction("TaskList", "TaskList", new { taskListID });
         }
 

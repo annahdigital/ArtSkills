@@ -77,6 +77,30 @@ body {
     margin: 10px 0;
 }
 
+.art-name > a {
+    display: inline-block;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+    .art-name > a:hover {
+        color: #00838f;
+    }
+
+
+.tasklist-name > a {
+    display: inline-block;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+    .tasklist-name > a:hover {
+        color: #00838f;
+    }
+
+
 .post-owner > a {
     display: inline-block;
     color: #000000;
