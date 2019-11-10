@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-md-1">
                     <button data-assigned-id="@Model.Id" class="add-comment-button"
-                            onclick="myFunction(this);"></button>
+                            onclick="addComment(this);"></button>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
- function myFunction(elem){
+ function addComment(elem){
       var id = $(elem).data('assigned-id');
         var text = document.getElementById("txtrev").value;
          

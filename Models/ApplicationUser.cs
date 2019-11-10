@@ -4,9 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtSkills.Data;
-//using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ArtSkills.Models
 {
@@ -33,29 +31,20 @@ namespace ArtSkills.Models
             {
                 return 0;
             }
-        }
-        //InProgress.Count == 0 ? 0 : Completed.Count / InProgress.Count * 100; 
+        } 
 
         public virtual ICollection<FollowArtist> FollowedBy { get; set; }
         public virtual ICollection<FollowArtist> Following { get; set; }
 
         public ApplicationUser()
         {
-            //this.RegistrationDate = DateTime.Now;
-            /*this.TaskLists = new List<TaskList>();
-            this.Arts = new List<Art>();
-            this.FollowedBy = new List<FollowArtist>();
-            this.Following = new List<FollowArtist>();*/
 
         }
         public ApplicationUser(string name)
         {
             this.UserName = name;
             this.RegistrationDate = DateTime.Now;
-            /*this.TaskLists = new List<TaskList>();
-            this.Arts = new List<Art>();
-            this.FollowedBy = new List<FollowArtist>();
-            this.Following = new List<FollowArtist>();*/
+
         }
 
         public Art PostArt(string name, string description, string pictureUrl)

@@ -30,19 +30,8 @@ namespace ArtSkills.Models
             this.ImagePath = pictureUrl;
             this.Description = description;
             this.PublishDate = DateTime.Now;
-            //this.Likes = new List<ApplicationUser>();
             this.Comments = new List<Comment>();
         }
-
-       /* public void LikeArt(ApplicationUser user)
-        {
-            Likes.Add(user);
-        }
-
-        public void UnlikeArt(ApplicationUser user)
-        {
-            Likes.Remove(user);
-        }*/
 
         public void EditInfo(string name, string description)
         {

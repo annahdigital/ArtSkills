@@ -21,14 +21,11 @@ namespace ArtSkills.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private ApplicationDbContext applicationDbContext { get; }
-        IHostingEnvironment _environment;
 
-        public CommentController(UserManager<ApplicationUser> userManager, ApplicationDbContext context,
-        IHostingEnvironment environment)
+        public CommentController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             applicationDbContext = context;
-            _environment = environment;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -39,7 +36,7 @@ namespace ArtSkills.Controllers
             return View(comment);
         }
 
-        public async Task<IActionResult> DeleteComment(String artID, String commentId)
+        public IActionResult DeleteComment(String artID, String commentId)
         {
             Comment comment = applicationDbContext.Comments.Find(commentId);
             applicationDbContext.Remove(comment);

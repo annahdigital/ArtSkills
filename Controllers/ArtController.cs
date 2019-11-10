@@ -14,29 +14,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Task = System.Threading.Tasks.Task;
 
-
 namespace ArtSkills.Controllers
 {
     public class ArtController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private ApplicationDbContext applicationDbContext { get; }
-        IHostingEnvironment _environment;
 
-        public ArtController(UserManager<ApplicationUser> userManager, ApplicationDbContext context,
-IHostingEnvironment environment)
+        public ArtController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             applicationDbContext = context;
-            _environment = environment;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
-        /*public IActionResult Index(string artID)
-        {
-            return View(applicationDbContext.Arts.ToList());
-        }*/
 
         public IActionResult Art(string artID)
         {
@@ -50,18 +41,14 @@ IHostingEnvironment environment)
             if (user != null)
                 return PartialView(user.Arts);
             else
-            {
                 return RedirectToAction("Index", "Home", new { area = "" });
-            }
         }
-
 
         public async Task<IActionResult> DeleteArt(String artID)
         {
             Art art = applicationDbContext.Arts.Find(artID);
             applicationDbContext.Remove(art);
             await applicationDbContext.SaveChangesAsync();
-            ApplicationUser user = await GetCurrentUserAsync();
             return RedirectToAction("Index", "UserWall");
         }
 
@@ -100,13 +87,9 @@ IHostingEnvironment environment)
                 ApplicationUser user = await GetCurrentUserAsync();
                 var comment = new Comment(user, art, text);
                 applicationDbContext.Comments.Add(comment);
-                art.Comments.Add(comment);
-                user.Comments.Add(comment);
                 await applicationDbContext.SaveChangesAsync();
             }
             return RedirectToAction("Art", "Art", new { artID });
         }
-
-
     }
 }

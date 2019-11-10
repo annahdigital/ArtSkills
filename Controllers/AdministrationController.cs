@@ -70,7 +70,6 @@ namespace ArtSkills.Controllers
                     var userRoles = await _userManager.GetRolesAsync(user);
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, new List<string>() {roles[0]});
-                    //await _userManager.UpdateAsync(user);
                     return RedirectToAction("Index");
                 }
             }
