@@ -63,37 +63,13 @@
         </div>
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="post-likes">
-                    @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
-                    {
-                        <div class="btn post-like-button not-liked" postId="@Model.Id" />
-                    }
-                    else
-                    {
-                        if (UserManager.GetUserId(User) != null)
-                        {
-                            if ((await UserManager.FindByIdAsync(UserManager.GetUserId(User))).Likes.ToList().Find(x => x.Art == Model) != null)
-                            {
-                                <div class="btn post-like-button liked" postId="@Model.Id"
-                                     onclick="location.href='@Url.Action("UnlikeArt", "Art", new { artID = Model.Id })'" />
-                            }
-                            else
-                            {
-                                <div class="btn post-like-button not-liked" postId="@Model.Id"
-                                     onclick="location.href='@Url.Action("LikeArt", "Art", new { artID = Model.Id })'" />
-                            }
-                        }
-                        else
-                        {
-                            <div class="btn post-like-button not-liked" postId="@Model.Id" />
-                        }
-                    }
+                    @await Component.InvokeAsync("UserLike", new { art = Model })
                 </div>
             </div>
             <div class="text-right">@Model.Likes.Count</div>
         </div>
-
         <div class="container-fluid commentsArea" style="width: 700px;">
             @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
         </div>

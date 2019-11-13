@@ -1,0 +1,14 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model Art
+@if ((await UserManager.FindByIdAsync(UserManager.GetUserId(User))).Likes.ToList().Find(x => x.Art == Model) != null)
+{
+<div class="btn post-like-button liked" postId="@Model.Id"
+     onclick="location.href='@Url.Action("UnlikeArt", "Art", new { artID = Model.Id })'" />
+}
+else
+{
+<div class="btn post-like-button not-liked" postId="@Model.Id"
+     onclick="location.href='@Url.Action("LikeArt", "Art", new { artID = Model.Id })'" />
+}
