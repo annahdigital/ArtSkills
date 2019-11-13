@@ -14,14 +14,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Task = System.Threading.Tasks.Task;
 
-
 namespace ArtSkills.Controllers
 {
     public class TaskListController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private ApplicationDbContext applicationDbContext { get; }
-        IHostingEnvironment _environment;
+        private readonly IHostingEnvironment _environment;
 
         public TaskListController(UserManager<ApplicationUser> userManager, ApplicationDbContext context,
         IHostingEnvironment environment)
@@ -50,9 +49,9 @@ namespace ArtSkills.Controllers
             ApplicationUser user = applicationDbContext.Users.Find(Id);
             List<TaskList> taskslists;
             if (completed)
-                taskslists = user.TaskLists.ToList().FindAll(x => x.Status == true);
+                taskslists = user.TaskLists.ToList().FindAll(x => x.Status);
             else
-                taskslists = user.TaskLists.ToList().FindAll(x => x.Status == false);
+                taskslists = user.TaskLists.ToList().FindAll(x => !x.Status);
             return View(taskslists);
         }
 

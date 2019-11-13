@@ -53,6 +53,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Components\" />
     <Folder Include="wwwroot\Arts\" />
     <Folder Include="wwwroot\Userpics\" />
   </ItemGroup>

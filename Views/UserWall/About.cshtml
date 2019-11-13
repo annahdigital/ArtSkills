@@ -6,43 +6,52 @@
     ViewData["Title"] = "About";
     Layout = "_Layout.cshtml";
 }
-    <div class="col-4 offset-4 text-center">
-        <h3>Basic information</h3>
-        <form id="profile-form" method="post" class="">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for=@Model.Name></label>
-                <input asp-for=@Model.Name class="form-control bg-white" disabled />
-            </div>
-            <div class="form-group">
-                <label asp-for=@Model.Surname></label>
-                <input asp-for=@Model.Surname class="form-control bg-white" disabled />
-            </div>
-            <div class="form-group">
-                <label>Date of birth</label>
-                <input asp-for=@Model.DateOfBirth class="form-control bg-white" disabled />
-            </div>
-        </form>
-        <hr />
-        <h3>Statistics</h3>
-        <div class="form-group">
-            <label>Registration date</label>
-            <input asp-for=@Model.RegistrationDate class="form-control bg-white" disabled />
+  
+    <div class="row">
+        <div class="col-4 text-center">
+            <img src="~/Resources/kittypaint.png" />
         </div>
-        <div class="form-group">
-            <label>Count of arts</label>
-            <input asp-for=@Model.Arts.Count class="form-control bg-white" disabled />
+        <div class="col-4 text-center bg-extralighttt extrarounded">
+            <h3>Basic information</h3>
+            <hr />
+            <form id="profile-form" method="post" class="">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for=@Model.Name></label>
+                    <input asp-for=@Model.Name class="form-control bg-white" disabled />
+                </div>
+                <div class="form-group">
+                    <label asp-for=@Model.Surname></label>
+                    <input asp-for=@Model.Surname class="form-control bg-white" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Date of birth</label>
+                    <input asp-for=@Model.DateOfBirth class="form-control bg-white" disabled />
+                </div>
+            </form>
+            <hr />
+            <h3>Statistics</h3>
+            @{
+                int progress = Model.TaskLists.ToList().FindAll(x => x.Status == true).Count;
+            }
+            <hr />
+            <div class="form-group">
+                <label>Completed tasklists progress bar:</label>
+                <div progress-value="progress" progress-max="@Model.TaskLists.Count"></div>
+            </div>
+            <p>Overall tasklists count: @Model.TaskLists.Count</p>
+            <hr />
+            <div class="form-group">
+                <label>Registration date</label>
+                <input asp-for=@Model.RegistrationDate class="form-control bg-white" disabled />
+            </div>
+            <div class="form-group" style="padding-bottom:10px;">
+                <label>Count of arts</label>
+                <input asp-for=@Model.Arts.Count class="form-control bg-white" disabled />
+            </div>
         </div>
-        <!--<div class="form-group">
-        <label>Completed tasklists</label>
-        <input asp-for=Model.Completed.Count class="form-control bg-white" disabled />
+        <div class="col-4 text-center">
+            <img src="~/Resources/kittypaint.png" />
+        </div>
     </div>
-    <div class="form-group">
-        <label>Tasklists in progress</label>
-        <input asp-for=Model.InProgress.Count class="form-control bg-white" disabled />
-    </div>-->
-        <div class="form-group">
-            <label>Tasklists</label>
-            <input asp-for=@Model.TaskLists.Count class="form-control bg-white" disabled />
-        </div>
-    </div>
+     
