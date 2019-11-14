@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model ApplicationUser
 @{
     ViewData["Title"] = "TaskListIndex";
@@ -8,22 +10,22 @@
 }
 
 <div class="text-center bg-image">
-        <h3>My task lists</h3>
-        <hr />
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default bg-white">@Html.ActionLink("Completed", "Completed", "TaskList", new { Id = Model.Id })</button>
-            <button type="button" class="btn btn-default bg-white active">@Html.ActionLink("In progress", "InProgress", "TaskList", new { Id = Model.Id })</button>
-        </div>
+    <h3>@Localizer["Title"]</h3>
+    <hr />
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default bg-white">@Html.ActionLink("Completed", "Completed", "TaskList", new { Id = Model.Id })</button>
+        <button type="button" class="btn btn-default bg-white active">@Html.ActionLink("In progress", "InProgress", "TaskList", new { Id = Model.Id })</button>
+    </div>
     <hr />
 </div>
 
 @if (Model.TaskLists.Count != 0)
 {
-        {await Html.RenderPartialAsync("~/Views/TaskList/TaskListsCollection.cshtml", @Model.TaskLists.OrderByDescending(a => a.StartDate).ToList());}
+    { await Html.RenderPartialAsync("~/Views/TaskList/TaskListsCollection.cshtml", @Model.TaskLists.OrderByDescending(a => a.StartDate).ToList()); }
 }
 else
 {
     <div class="text-center">
-        <h1>No task lists yet! :c </h1>
+        <h1>@Localizer["Message"] </h1>
     </div>
 }

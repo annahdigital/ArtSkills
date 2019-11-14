@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model ApplicationUser
 @{
     ViewData["Title"] = "Index";
@@ -16,6 +18,6 @@
 else
 {
     <div class="text-center">
-        <h1>No arts yet! :c </h1>
+        <h1>@Localizer["Message"]</h1>
     </div>
 }

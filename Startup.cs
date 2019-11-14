@@ -15,6 +15,8 @@ using ArtSkills.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace ArtSkills
 {
@@ -37,6 +39,26 @@ namespace ArtSkills
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            var supportedCultures = new[]
+{
+                new CultureInfo("en"),
+                new CultureInfo("fr"),
+                new CultureInfo("ru")
+            };
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
+        {
+            new QueryStringRequestCultureProvider(),
+            new CookieRequestCultureProvider()
+        };
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
@@ -49,8 +71,9 @@ namespace ArtSkills
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        }
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                 .AddViewLocalization()
+                 .AddDataAnnotationsLocalization();         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -72,7 +95,7 @@ namespace ArtSkills
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            app.UseRequestLocalization();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

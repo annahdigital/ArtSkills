@@ -1,8 +1,10 @@
 ﻿@using ArtSkills.Models
 @model ApplicationUser
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default bg-white">@Html.ActionLink("About artist", "About", "UserWall", new { Id = Model.Id })</button>
-    <button type="button" class="btn btn-default bg-white active">@Html.ActionLink("Arts", "Index", "UserWall", new { Id = Model.Id })</button>
-    <button type="button" class="btn btn-default bg-white">@Html.ActionLink("TaskLists", "TaskListIndex", "UserWall", new { Id = Model.Id })</button>
-    <button type="button" class="btn btn-default bg-white">@Html.ActionLink("Followers", "Followers", "UserWall", new { Id = Model.Id })</button>
+    <button type="button" class="btn btn-default bg-white">@Html.ActionLink(Localizer["About"].Value, "About", "UserWall", new { Id = Model.Id })</button>
+    <button type="button" class="btn btn-default bg-white active">@Html.ActionLink(Localizer["Arts"].Value, "Index", "UserWall", new { Id = Model.Id })</button>
+    <button type="button" class="btn btn-default bg-white">@Html.ActionLink(Localizer["TaskLists"].Value, "TaskListIndex", "UserWall", new { Id = Model.Id })</button>
+    <button type="button" class="btn btn-default bg-white">@Html.ActionLink(Localizer["Followers"].Value, "Followers", "UserWall", new { Id = Model.Id })</button>
 </div>

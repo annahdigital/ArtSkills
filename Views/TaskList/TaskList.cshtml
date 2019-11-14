@@ -2,72 +2,74 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @model TaskList
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "TaskList";
 }
-    <div class="container-fluid extrarounded bg-lighttt" style="padding-bottom:20px; padding-top: 10px; width:70%;">
-        <div class="row">
-            <div class="col-2">
-                @if (Model.Status == true)
-                {
-                    <div class="container-fluid bg-success extrarounded text-center" style="width:80px; height:40px; padding-top:7px;">
-                        <p>@Model.Percentage %</p>
-                    </div>
-
-                }
-                else
-                {
-                    <div class="container-fluid bg-extralighttt extrarounded text-center" style="width:80px; height:40px; padding-top:7px;">
-                        <p>@Model.Percentage %</p>
-                    </div>
-                }
-            </div>
-            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+<div class="container-fluid extrarounded bg-lighttt" style="padding-bottom:20px; padding-top: 10px; width:70%;">
+    <div class="row">
+        <div class="col-2">
+            @if (Model.Status == true)
             {
-                <div class="col-md-8 offset-2">
-                    <button postId="@Model.Id" class="delete-tasklist-button" type="submit"
-                            onclick="location.href='@Url.Action("DeleteTaskList", "TaskList", new { taskListID = Model.Id })'"></button>
+                <div class="container-fluid bg-success extrarounded text-center" style="width:80px; height:40px; padding-top:7px;">
+                    <p>@Model.Percentage %</p>
+                </div>
+
+            }
+            else
+            {
+                <div class="container-fluid bg-extralighttt extrarounded text-center" style="width:80px; height:40px; padding-top:7px;">
+                    <p>@Model.Percentage %</p>
                 </div>
             }
         </div>
-        <div class="text-center tasklist-name">
-            @Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })
-            <hr />
-        </div>
-        <div class="col-4 offset-4 text-center">
-
-            @if (Model.Status == true)
-            {
-                <p>@Model.StartDate.ToString("dd/MM/yyyy") - @Model.EndDate.ToString("dd/MM/yyyy")</p>
-            }
-            else
-            {
-                <p>@Model.StartDate.ToString("dd/MM/yyyy") - ...</p>
-            }
-            <div class="container-fluid extrarounded bg-extralighttt" style="margin-bottom:10px;">
-                <p>@Model.Description</p>
+        @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+        {
+            <div class="col-md-8 offset-2">
+                <button postId="@Model.Id" class="delete-tasklist-button" type="submit"
+                        onclick="location.href='@Url.Action("DeleteTaskList", "TaskList", new { taskListID = Model.Id })'"></button>
             </div>
-            <hr />
-
-            @if (Model.Tasks.Count == 0)
-            {
-                <p>No tasks yet! Edit your tasklist!</p>
-            }
-            else
-            {
-                @foreach (var Task in @Model.Tasks)
-                {
-                    { await Html.RenderPartialAsync("Task.cshtml", @Task); }
-                }
-            }
-            <hr />
-            @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
-            {
-            <div class="container-fluid extrarounded bg-image" style="margin-bottom:10px;">
-                 <div class="post-owner">
-                        @Html.ActionLink("Edit", "EditTaskList", "TaskList", new { taskListID = @Model.Id })
-                    </div>
-                 </div>
-            }
-        </div>
+        }
     </div>
+    <div class="text-center tasklist-name">
+        @Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })
+        <hr />
+    </div>
+    <div class="col-4 offset-4 text-center">
+
+        @if (Model.Status == true)
+        {
+            <p>@Model.StartDate.ToString("dd/MM/yyyy") - @Model.EndDate.ToString("dd/MM/yyyy")</p>
+        }
+        else
+        {
+            <p>@Model.StartDate.ToString("dd/MM/yyyy") - ...</p>
+        }
+        <div class="container-fluid extrarounded bg-extralighttt" style="margin-bottom:10px;">
+            <p>@Model.Description</p>
+        </div>
+        <hr />
+
+        @if (Model.Tasks.Count == 0)
+        {
+            <p>@Localizer["Message"]</p>
+        }
+        else
+        {
+            @foreach (var Task in @Model.Tasks)
+            {
+                { await Html.RenderPartialAsync("Task.cshtml", @Task); }
+            }
+        }
+        <hr />
+        @if (Model.ApplicationUser.Id == UserManager.GetUserId(User))
+        {
+            <div class="container-fluid extrarounded bg-image" style="margin-bottom:10px;">
+                <div class="post-owner">
+                    @Html.ActionLink(Localizer["Edit"].Value.ToString(), "EditTaskList", "TaskList", new { taskListID = @Model.Id })
+                </div>
+            </div>
+        }
+    </div>
+</div>

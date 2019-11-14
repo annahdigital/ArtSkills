@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @inject UserManager<ApplicationUser> UserManager
 @model List<Art>
 @{
@@ -10,8 +12,8 @@
 
 <div class="text-center bg-image">
     <img src="~/Resources/kitty.png" style="padding: 10px;" />
-    <h1 class="display-4">Welcome home!</h1>
-    <p>Challenge your ArtSkills now!</p>
+    <h1 class="display-4">@Localizer["Welcome"]</h1>
+    <p>@Localizer["Message"]</p>
     <hr />
 </div>
 

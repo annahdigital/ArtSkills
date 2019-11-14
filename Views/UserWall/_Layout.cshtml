@@ -2,68 +2,70 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model ApplicationUser
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="text-center bg-image">
-        @if (Model.UserPic == null)
+<div class="text-center bg-image">
+    @if (Model.UserPic == null)
+    {
+        <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
+    }
+    else
+    {
+        <img src="@Model.UserPic" class="img-circle" height="175" width="175" />
+    }
+    @if (Model.artistNickname != null)
+    {
+        <h1>@Model.artistNickname</h1>
+    }
+    else
+    {
+        <h1>@Model.UserName</h1>
+    }
+    <p>@Model.About</p>
+    <p>@Localizer["Followers"] @Model.FollowedBy.Count</p>
+    @if (Model.Id != UserManager.GetUserId(User))
+    {
+        if (Model.FollowedBy.ToList().Find(x => x.FollowerId == UserManager.GetUserId(User)) != null)
         {
-            <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
+            <button id="remove-follower-button"
+                    onclick="location.href='@Url.Action("UnfollowUser", "UserWall", new { Id = Model.Id })'"
+                    class="btn btn-primary">
+                @Localizer["Unfollow"]
+            </button>
         }
         else
         {
-            <img src="@Model.UserPic" class="img-circle" height="175" width="175" />
+            <button id="update-profile-button"
+                    onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.Id })'"
+                    class="btn btn-primary">
+                @Localizer["Follow"]
+            </button>
         }
-        @if (Model.artistNickname != null)
+    }
+    @if (Model.Id == UserManager.GetUserId(User))
+    {
+        <div class="btn-group" role="group">
+            <form method="get" asp-controller="UserWall" asp-action="AddArt">
+                <button id="addArt" class="btn btn-primary">@Localizer["Load"]</button>
+            </form>
+            <form method="get" asp-controller="UserWall" asp-action="AddTaskList">
+                <button id="add_tasklist" class="btn btn-primary">@Localizer["Add"]</button>
+            </form>
+            <form method="get" asp-controller="UserWall" asp-action="UploadUserPic">
+                <button id="uploadUserPic" class="btn btn-primary">@Localizer["ChangeAvatar"]</button>
+            </form>
+        </div>
+        <!--if (Model.UserRole == "admin" || Model.UserRole == "moderator")-->
+        if ((await UserManager.GetRolesAsync(Model)).Contains("admin") || (await UserManager.GetRolesAsync(Model)).Contains("moderator"))
         {
-            <h1>@Model.artistNickname</h1>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">@Localizer["Administration"]</a>
         }
-        else
-        {
-            <h1>@Model.UserName</h1>
-        }
-        <p>@Model.About</p>
-        <p>Followers: @Model.FollowedBy.Count</p>
-        @if (Model.Id != UserManager.GetUserId(User))
-        {
-            if (Model.FollowedBy.ToList().Find(x => x.FollowerId == UserManager.GetUserId(User)) != null)
-            {
-                <button id="remove-follower-button"
-                        onclick="location.href='@Url.Action("UnfollowUser", "UserWall", new { Id = Model.Id })'"
-                        class="btn btn-primary">
-                    Unfollow user
-                </button>
-            }
-            else
-            {
-                <button id="update-profile-button"
-                        onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.Id })'"
-                        class="btn btn-primary">
-                    Follow user
-                </button>
-            }
-        }
-        @if (Model.Id == UserManager.GetUserId(User))
-        {
-            <div class="btn-group" role="group">
-                <form method="get" asp-controller="UserWall" asp-action="AddArt">
-                    <button id="addArt" class="btn btn-primary">Load art</button>
-                </form>
-                <form method="get" asp-controller="UserWall" asp-action="AddTaskList">
-                    <button id="add_tasklist" class="btn btn-primary">Add tasklist</button>
-                </form>
-                <form method="get" asp-controller="UserWall" asp-action="UploadUserPic">
-                    <button id="uploadUserPic" class="btn btn-primary">Change avatar</button>
-                </form>
-            </div>
-            <!--if (Model.UserRole == "admin" || Model.UserRole == "moderator")-->
-            if ((await UserManager.GetRolesAsync(Model)).Contains("admin") || (await UserManager.GetRolesAsync(Model)).Contains("moderator"))
-            {
-                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">Administration</a>
-            }
-        }
-    </div>
+    }
+</div>
 <hr>
 
 <div class="text-center">

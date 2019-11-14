@@ -2,12 +2,14 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @model ApplicationUser
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Followers";
 }
 
 <div class="text-center bg-image">
-    <h2>Followers</h2>
+    <h2>@Localizer["Followers"]</h2>
     <hr />
 </div>
 
@@ -39,7 +41,7 @@
                         }
                     </div>
                 </div>
-                
+
             }
         </div>
     </div>

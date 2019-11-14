@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model Art
 @{
     ViewData["Title"] = "Art";
@@ -79,7 +81,7 @@
                 <div class="col-md-11">
                     <textarea class="form-control comment-sending-form"
                               id="txtrev"
-                              placeholder="Share your opinion!"></textarea>
+                              placeholder=@Localizer["Message"]></textarea>
                 </div>
                 <div class="col-md-1">
                     <button data-assigned-id="@Model.Id" class="add-comment-button"
@@ -94,7 +96,7 @@
  function addComment(elem){
       var id = $(elem).data('assigned-id');
         var text = document.getElementById("txtrev").value;
-         
+
         location.href = '@Url.Action("CommentArt", "Art")' + '?artID=' + id + '&text=' + text;
     }
 </script>

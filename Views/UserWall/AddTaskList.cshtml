@@ -1,25 +1,27 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Add tasklist";
 }
 
 <div class="col-4 offset-4 text-center">
-    <h3>Adding tasklist</h3>
+    <h3>@Localizer["Title"]</h3>
     <hr />
 
     <form asp-action="AddTaskList" method="post">
         <fieldset>
-            <legend>Name of the taskList</legend>
+            <legend>@Localizer["Name"]</legend>
             <input name="name" class="form-control bg-white" required />
         </fieldset>
         <fieldset>
-            <legend>Description</legend>
+            <legend>@Localizer["Description"]</legend>
             <textarea name="Description" rows="5" cols="44"> </textarea>
         </fieldset>
         <hr />
-        <button type="submit" class="btn btn-primary">Add taskList</button>
+        <button type="submit" class="btn btn-primary">@Localizer["Add"]</button>
 
     </form>
 </div>

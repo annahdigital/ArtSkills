@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model ApplicationUser
 @{
     ViewData["Title"] = "Add art";
@@ -8,26 +10,26 @@
 }
 
 <div class="col-4 offset-4 text-center">
-    <h3>Adding art</h3>
+    <h3>@Localizer["Title"]</h3>
     <hr />
 
     <form asp-action="AddArt" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend>Name of the art</legend>
+            <legend>@Localizer["Name"]</legend>
             <input name="name" class="form-control bg-white" required />
         </fieldset>
 
         <fieldset>
-            <legend>Load a picture</legend>
+            <legend>@Localizer["Load"]</legend>
             <input name="pictureUrl" type="file" class="form-control bg-image" required />
         </fieldset>
         <hr />
         <fieldset>
-            <legend>Description</legend>
+            <legend>@Localizer["Description"]</legend>
             <textarea name="Description" rows="5" cols="44"> </textarea>
         </fieldset>
         <hr />
-        <button type="submit" class="btn btn-primary">Add art</button>
+        <button type="submit" class="btn btn-primary">@Localizer["Add"]</button>
 
     </form>
 </div>

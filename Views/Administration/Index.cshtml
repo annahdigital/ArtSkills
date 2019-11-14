@@ -1,47 +1,49 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model List<ApplicationUser>
 @{
     ViewData["Title"] = "Index";
 }
-    <div class="row bg-image">
-        <div class="text-left">
-            <img src="~/Resources/admin.png" alt="" />
-        </div>
-        <div class="text-center offset-3 col-3">
-            <h1>List of users</h1>
-        </div>
-        <div class="offset-4">
-            <img src="~/Resources/adminrev.png" alt="" />
-        </div>
+<div class="row bg-image">
+    <div class="text-left">
+        <img src="~/Resources/admin.png" alt="" />
     </div>
-<hr/>
+    <div class="text-center offset-3 col-3">
+        <h1>@Localizer["Title"]</h1>
+    </div>
+    <div class="offset-4">
+        <img src="~/Resources/adminrev.png" alt="" />
+    </div>
+</div>
+<hr />
 <table class="table">
     <tr>
-        <th>Artist nickname</th>
+        <th>@Localizer["Name"]</th>
         <th>Email</th>
-        <th>User role</th>
-        <th>Edit</th>
+        <th>@Localizer["UserRole"]</th>
+        <th>@Localizer["Edit"]</th>
     </tr>
     @foreach (var user in Model)
     {
-<tr>
-    @if (user.artistNickname != null)
-    {
-        <td> @user.artistNickname </td>
-    }
-    else
-    {
-        <td>Nickname unknown</td>
-    }
-    <td>@((await UserManager.GetRolesAsync(user)).ToList()[0])</td>
-   
-    <td>@user.Email</td>
-    <td>
-        <a class="btn btn-sm btn-primary" asp-action="EditUserRoles" asp-route-userid="@user.Id">User roles</a>
-    </td>
-</tr>
+        <tr>
+            @if (user.artistNickname != null)
+            {
+                <td> @user.artistNickname </td>
+            }
+            else
+            {
+                <td>@Localizer["MessageNickname"]</td>
+            }
+            <td>@((await UserManager.GetRolesAsync(user)).ToList()[0])</td>
+
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="EditUserRoles" asp-route-userid="@user.Id">@Localizer["Roles"]</a>
+            </td>
+        </tr>
     }
 </table>
 

@@ -1,15 +1,17 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @inject UserManager<ApplicationUser> UserManager
 @model List<Comment>
 @{
     ViewData["Title"] = "CommentsCollection";
 }
-<hr />
+
 @if (
-    Model.Count == 0)
+   Model.Count == 0)
 {
-    <p class="no-comments text-center">No comments yet! But you can fix it. ^_^ </p>
+    <p class="no-comments text-center">@Localizer["Message"] </p>
 }
 
 @foreach (var comment in Model.OrderBy(a => a.CommentDate))

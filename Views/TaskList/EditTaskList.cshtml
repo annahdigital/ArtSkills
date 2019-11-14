@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model TaskList
 @{
     ViewData["Title"] = "EditTaskList";
@@ -17,7 +19,7 @@
         <div class="col-4 offset-4 text-center">
             <div class="tasklist-name">
                 @Html.ActionLink(@Model.Name, "TaskList", "TaskList", new { taskListID = @Model.Id })
-            <hr />
+                <hr />
             </div>
             @if (Model.Status == true)
             {
@@ -33,7 +35,7 @@
             <hr />
             @if (Model.Tasks.Count == 0)
             {
-                <p>No tasks yet! Add tasks. ^_^</p>
+                <p>@Localizer["Message"]</p>
             }
             else
             {
@@ -44,16 +46,16 @@
             }
             <hr />
             <div class="text-center">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input id="txtrev" name="name" class="form-control bg-white" placeholder="Task" required />
-                        </div>
-                        <div class="col-2">
-                            <button  data-assigned-id="@Model.Id" 
-                                    class="add-task-button"
-                                    onclick="myFunction(this);"></button>
-                        </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input id="txtrev" name="name" class="form-control bg-white" placeholder=@Localizer["Task"].Value required />
                     </div>
+                    <div class="col-2">
+                        <button data-assigned-id="@Model.Id"
+                                class="add-task-button"
+                                onclick="myFunction(this);"></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

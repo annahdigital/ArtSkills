@@ -1,6 +1,8 @@
 ﻿@using ArtSkills.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model ApplicationUser
 @{
     ViewData["Title"] = "Changing avatar.";
@@ -8,15 +10,15 @@
 }
 
 <div class="col-4 offset-4 text-center">
-    <h3>Change avatar</h3>
+    <h3>@Localizer["Title"]</h3>
     <hr />
 
     <form asp-action="UploadUserPic" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend>Load a picture</legend>
+            <legend>@Localizer["Load"]</legend>
             <input name="pictureUrl" type="file" class="form-control bg-image" required />
         </fieldset>
         <hr />
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary">@Localizer["Upload"]</button>
     </form>
 </div>
