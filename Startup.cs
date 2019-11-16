@@ -45,7 +45,8 @@ namespace ArtSkills
 {
                 new CultureInfo("en"),
                 new CultureInfo("fr"),
-                new CultureInfo("ru")
+                new CultureInfo("ru"),
+                new CultureInfo("be")
             };
 
             services.Configure<RequestLocalizationOptions>(options =>

@@ -20,7 +20,11 @@ namespace ArtSkills.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            var progressPercentage = Math.Round(((decimal)(ProgressValue) / (decimal)progressMax) * 100, 4);
+            decimal progressPercentage;
+            if (progressMax != 0)
+                progressPercentage = Math.Round(((decimal)(ProgressValue) / (decimal)progressMax) * 100, 4);
+            else
+               progressPercentage = 0;
 
             string progressBarContent =
             $@"<div class='progress-bar bg-success' role='progressbar' aria-valuenow='{ProgressValue}' 
