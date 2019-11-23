@@ -120,6 +120,9 @@
   <data name="Message" xml:space="preserve">
     <value>Испытайте свои навыки с нами!</value>
   </data>
+  <data name="NoArts" xml:space="preserve">
+    <value>Пока нет артов! :с</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать!</value>
   </data>

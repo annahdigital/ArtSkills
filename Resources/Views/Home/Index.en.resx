@@ -120,6 +120,9 @@
   <data name="Message" xml:space="preserve">
     <value>Challenge your ArtSkills now!</value>
   </data>
+  <data name="NoArts" xml:space="preserve">
+    <value>No arts yet! :c</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome home!</value>
   </data>

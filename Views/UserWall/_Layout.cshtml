@@ -1,38 +1,40 @@
 ﻿@using ArtSkills.Models
+@using ArtSkills.ViewModels;
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
 @inject UserManager<ApplicationUser> UserManager
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@model ApplicationUser
+@model UserAndArtsViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="text-center bg-image">
-    @if (Model.UserPic == null)
+    @if (Model.user.UserPic == null)
     {
         <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
+        
     }
     else
     {
-        <img src="@Model.UserPic" class="img-circle" height="175" width="175" />
+        <img src="@Model.user.UserPic" class="img-circle" height="175" width="175" />
     }
-    @if (Model.artistNickname != null)
+    @if (Model.user.artistNickname != null)
     {
-        <h1>@Model.artistNickname</h1>
+        <h1>@Model.user.artistNickname</h1>
     }
     else
     {
-        <h1>@Model.UserName</h1>
+        <h1>@Model.user.UserName</h1>
     }
-    <p>@Model.About</p>
-    <p>@Localizer["Followers"] @Model.FollowedBy.Count</p>
-    @if (Model.Id != UserManager.GetUserId(User))
+    <p>@Model.user.About</p>
+    <p>@Localizer["Followers"] @Model.user.FollowedBy.Count</p>
+    @if (Model.user.Id != UserManager.GetUserId(User))
     {
-        if (Model.FollowedBy.ToList().Find(x => x.FollowerId == UserManager.GetUserId(User)) != null)
+        if (Model.user.FollowedBy.ToList().Find(x => x.FollowerId == UserManager.GetUserId(User)) != null)
         {
             <button id="remove-follower-button"
-                    onclick="location.href='@Url.Action("UnfollowUser", "UserWall", new { Id = Model.Id })'"
+                    onclick="location.href='@Url.Action("UnfollowUser", "UserWall", new { Id = Model.user.Id })'"
                     class="btn btn-primary">
                 @Localizer["Unfollow"]
             </button>
@@ -40,13 +42,13 @@
         else
         {
             <button id="update-profile-button"
-                    onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.Id })'"
+                    onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.user.Id })'"
                     class="btn btn-primary">
                 @Localizer["Follow"]
             </button>
         }
     }
-    @if (Model.Id == UserManager.GetUserId(User))
+    @if (Model.user.Id == UserManager.GetUserId(User))
     {
         <div class="btn-group" role="group">
             <form method="get" asp-controller="UserWall" asp-action="AddArt">
@@ -60,16 +62,16 @@
             </form>
         </div>
         <!--if (Model.UserRole == "admin" || Model.UserRole == "moderator")-->
-        if ((await UserManager.GetRolesAsync(Model)).Contains("admin") || (await UserManager.GetRolesAsync(Model)).Contains("moderator"))
+        if ((await UserManager.GetRolesAsync(Model.user)).Contains("admin") || (await UserManager.GetRolesAsync(Model.user)).Contains("moderator"))
         {
             <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">@Localizer["Administration"]</a>
         }
     }
 </div>
 <hr>
-
 <div class="text-center">
     <partial name="_UserWallNavigation" />
     <hr />
 </div>
+
 @RenderBody()

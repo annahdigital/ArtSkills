@@ -9,7 +9,7 @@
     <div class="container-fluid posts-container">
         @foreach (var Art in @Model)
         {
-            {await Html.RenderPartialAsync("Art.cshtml", @Art);}
-            <hr />
+                {await Html.RenderPartialAsync("Art.cshtml", @Art);}
+                <hr />
         }
     </div>

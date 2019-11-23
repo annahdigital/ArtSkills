@@ -20,13 +20,46 @@
 @if (Model.Count != 0)
 {
     <div class="posts" id="postsArea">
-        @{await Html.RenderPartialAsync("~/Views/Art/ArtsCollection.cshtml", @Model.OrderByDescending(a => a.PublishDate).ToList());}
+        @{await Html.RenderPartialAsync("~/Views/Art/ArtsCollection.cshtml", Model);}
     </div>
 }
 else
 {
     <div class="text-center">
-        <h1>No arts yet! :c </h1>
+        <h1>@Localizer["NoArts"]</h1>
     </div>
 }
 
+<script>
+$(function () {
+    var pageNumber = 0;
+    var _inCallback = false;
+    function getArts() {
+        if (pageNumber > -1 && !_inCallback) {
+            _inCallback = true;
+            pageNumber++;
+            $.ajax({
+                type: 'GET',
+                url: '/Home/Index/',
+                data: {
+                    pageNumber: pageNumber
+                },
+                success: function (data) {
+                    if (data != '') {
+                        $(".posts").append(data);
+                    }
+                    else {
+                        pageNumber = -1;
+                    }
+                    _inCallback = false;
+                }
+            });
+        }
+    }
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            getArts();
+        }
+    });
+})
+</script>

@@ -1,9 +1,10 @@
 ﻿@using ArtSkills.Models
+@using ArtSkills.ViewModels
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@model ApplicationUser
+@model UserAndArtsViewModel
 @{
     ViewData["Title"] = "About";
     Layout = "_Layout.cshtml";
@@ -20,36 +21,36 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label>@Localizer["Name"]</label>
-                <input asp-for=@Model.Name class="form-control bg-white" disabled />
+                <input asp-for=@Model.user.Name class="form-control bg-white" disabled />
             </div>
             <div class="form-group">
                 <label>@Localizer["Surname"]</label>
-                <input asp-for=@Model.Surname class="form-control bg-white" disabled />
+                <input asp-for=@Model.user.Surname class="form-control bg-white" disabled />
             </div>
             <div class="form-group">
                 <label>@Localizer["BirthDate"]</label>
-                <input asp-for=@Model.DateOfBirth class="form-control bg-white" disabled />
+                <input asp-for=@Model.user.DateOfBirth class="form-control bg-white" disabled />
             </div>
         </form>
         <hr />
         <h3>@Localizer["Statistics"]</h3>
         @{
-            int progress = Model.TaskLists.ToList().FindAll(x => x.Status == true).Count;
+            int progress = Model.user.TaskLists.ToList().FindAll(x => x.Status == true).Count;
         }
         <hr />
         <div class="form-group">
             <label>@Localizer["Progress"]</label>
-            <div progress-value="progress" progress-max="@Model.TaskLists.Count"></div>
+            <div progress-value="progress" progress-max="@Model.user.TaskLists.Count"></div>
         </div>
-        <p>@Localizer["TaskCount"] @Model.TaskLists.Count</p>
+        <p>@Localizer["TaskCount"] @Model.user.TaskLists.Count</p>
         <hr />
         <div class="form-group">
             <label>@Localizer["Registration"]</label>
-            <input asp-for=@Model.RegistrationDate class="form-control bg-white" disabled />
+            <input asp-for=@Model.user.RegistrationDate class="form-control bg-white" disabled />
         </div>
         <div class="form-group" style="padding-bottom:10px;">
             <label>@Localizer["ArtCount"]</label>
-            <input asp-for=@Model.Arts.Count class="form-control bg-white" disabled />
+            <input asp-for=@Model.user.Arts.Count class="form-control bg-white" disabled />
         </div>
     </div>
     <div class="col-4 text-center">

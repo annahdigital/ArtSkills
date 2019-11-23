@@ -15,14 +15,26 @@ namespace ArtSkills.Controllers
     public class HomeController : Controller
     {
         private ApplicationDbContext applicationDbContext { get; }
+        const int artsCount = 5;
 
         public HomeController(ApplicationDbContext context)
         {
             applicationDbContext = context;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(int pageNumber = 0)
         {
-            return View(applicationDbContext.Arts.ToList());
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("~/Views/Art/ArtsCollection.cshtml", artsForThePage(pageNumber));
+            }
+            return View(artsForThePage(pageNumber));
+        }
+
+        public List<Art> artsForThePage(int pageNumber)
+        {
+            var arts = applicationDbContext.Arts.OrderByDescending(a => a.PublishDate).Skip(pageNumber * artsCount).Take(artsCount).ToList();
+            return arts;
         }
 
         public IActionResult Privacy()

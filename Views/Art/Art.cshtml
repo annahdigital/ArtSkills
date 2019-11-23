@@ -38,7 +38,7 @@
                     <p>@Model.PublishDate</p>
                     <hr />
                 </div>
-                <img class="responsive rounded" src="@Model.ImagePath" />
+                <img class="responsive extrarounded" src="@Model.ImagePath" />
                 <div class="container-fluid bg-extralighttt text-center post-text extrarounded">
                     @Model.Description
                 </div>
@@ -72,25 +72,29 @@
             </div>
             <div class="text-right">@Model.Likes.Count</div>
         </div>
-        <div class="container-fluid commentsArea" style="width: 700px;">
-            @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
+        <div class="row" style=" margin: auto;">
+                <div class="container-fluid commentsArea" style="width: 700px;">
+                    @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
+                </div>
         </div>
-
-        <div class="container-fluid comment-sending-area" style="width: 700px;">
-            <div class="row">
-                <div class="col-md-11">
-                    <textarea class="form-control comment-sending-form"
-                              id="txtrev"
-                              placeholder=@Localizer["Message"]></textarea>
-                </div>
-                <div class="col-md-1">
-                    <button data-assigned-id="@Model.Id" class="add-comment-button"
-                            onclick="addComment(this);"></button>
-                </div>
+        <div class="row" style=" margin: auto;">
+                <div class="container-fluid comment-sending-area" style="width: 700px;">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <textarea class="form-control comment-sending-form"
+                                      id="txtrev"
+                                      placeholder=@Localizer["Message"]></textarea>
+                        </div>
+                        <div class="col-md-1">
+                            <button data-assigned-id="@Model.Id" class="add-comment-button"
+                                    onclick="addComment(this);"></button>
+                        </div>
+                    </div>
             </div>
-        </div>
     </div>
+        </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
  function addComment(elem){

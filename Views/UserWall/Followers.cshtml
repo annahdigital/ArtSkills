@@ -1,7 +1,8 @@
 ﻿@using ArtSkills.Models
+@using ArtSkills.ViewModels
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
-@model ApplicationUser
+@model UserAndArtsViewModel
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @{
@@ -13,11 +14,11 @@
     <hr />
 </div>
 
-@if (Model.FollowedBy.Count != 0)
+@if (Model.user.FollowedBy.Count != 0)
 {
     <div class="followers-list">
         <div class="row">
-            @foreach (var follower in Model.FollowedBy)
+            @foreach (var follower in Model.user.FollowedBy)
             {
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="follower-info full-width extrarounded">

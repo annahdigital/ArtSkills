@@ -13,10 +13,12 @@ using System.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Task = System.Threading.Tasks.Task;
+using ArtSkills.ViewModels;
 
 
 namespace ArtSkills.Controllers
 {
+
     public class UserWallController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -36,7 +38,8 @@ namespace ArtSkills.Controllers
         public async Task<IActionResult> Followers(string Id)
         {
             ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
-            return View(user);
+            var model = new UserAndArtsViewModel {user = user};
+            return View(model);
         }
 
         public async Task<IActionResult> FollowUser(string Id)
@@ -58,30 +61,50 @@ namespace ArtSkills.Controllers
             return RedirectToAction("Index", new { Id });
         }
 
-        public async Task<IActionResult> Index(string Id)
+        public async Task<IActionResult> Index(string Id, int pageNumber = 0)
         {
             if (Id == null)
             {
                 ApplicationUser user = await GetCurrentUserAsync();
-                return View(user);
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("~/Views/Art/ArtsCollection.cshtml", artsForThePage(pageNumber, user.Id));
+                }
+                var model = new UserAndArtsViewModel { Arts = artsForThePage(pageNumber, user.Id), user = user, Id = Id };
+                return View(model);
             }
             else
             {
                 ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
-                return View(user);
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("~/Views/Art/ArtsCollection.cshtml", artsForThePage(pageNumber, Id));
+                }
+                var model = new UserAndArtsViewModel { Arts = artsForThePage(pageNumber, user.Id), user = user, Id = Id };
+                return View(model);
             }
+        }
+
+        const int artsCount = 5;
+
+        public List<Art> artsForThePage(int pageNumber, string userId)
+        {
+            var arts = applicationDbContext.Users.ToList().Find(x => x.Id == userId).Arts.OrderByDescending(a => a.PublishDate).Skip(pageNumber * artsCount).Take(artsCount).ToList();
+            return arts;
         }
 
         public async Task<IActionResult> About(string Id)
         {
             ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
-            return View(user);
+            var model = new UserAndArtsViewModel { user = user };
+            return View(model);
         }
 
         public async Task<IActionResult> UploadUserPic()
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            return View(user);
+            var model = new UserAndArtsViewModel { user = user };
+            return View(model);
         }
 
         [HttpPost]
@@ -102,7 +125,8 @@ namespace ArtSkills.Controllers
         public async Task<IActionResult> AddArt()
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            return View(user);
+            var model = new UserAndArtsViewModel { user = user };
+            return View(model);
         }
 
         [HttpPost]
@@ -124,7 +148,8 @@ namespace ArtSkills.Controllers
         public async Task<IActionResult> AddTaskList()
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            return View(user);
+            var model = new UserAndArtsViewModel { user = user };
+            return View(model);
         }
 
 
@@ -144,12 +169,14 @@ namespace ArtSkills.Controllers
             if (Id == null)
             {
                 ApplicationUser user = await GetCurrentUserAsync();
-                return View(user);
+                var model = new UserAndArtsViewModel { user = user };
+                return View(model);
             }
             else
             {
                 ApplicationUser user = applicationDbContext.Users.ToList().Find(userr => userr.Id == Id);
-                return View(user);
+                var model = new UserAndArtsViewModel { user = user };
+                return View(model);
             }
         }
     }

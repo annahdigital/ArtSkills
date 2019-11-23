@@ -1,9 +1,7 @@
-﻿@using ArtSkills.Models
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<ApplicationUser> UserManager
+﻿@using ArtSkills.ViewModels;
+@model UserAndArtsViewModel
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@model ApplicationUser
 @{
     ViewData["Title"] = "Changing avatar.";
     Layout = "_Layout.cshtml";

@@ -3,16 +3,20 @@
 @inject UserManager<ApplicationUser> UserManager
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@model ApplicationUser
+@using ArtSkills.ViewModels;
+@model UserAndArtsViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout.cshtml";
 }
 
+
+<div data="@Model.Id" id="idGiver"></div>
+
 @if (Model.Arts.Count != 0)
 {
     <div class="posts" id="postsArea">
-        @{await Html.RenderPartialAsync("~/Views/Art/ArtsCollection.cshtml", @Model.Arts.OrderByDescending(a => a.PublishDate).ToList());}
+        @{await Html.RenderPartialAsync("~/Views/Art/ArtsCollection.cshtml", Model.Arts);}
     </div>
 }
 else
@@ -21,3 +25,39 @@ else
         <h1>@Localizer["Message"]</h1>
     </div>
 }
+
+<script>
+    $(function () {
+        var pageNumber = 0;
+        var _inCallback = false;
+        var Id = '@Model.Id';
+        function getArts() {
+            if (pageNumber > -1 && !_inCallback) {
+                _inCallback = true;
+                pageNumber++;
+                $.ajax({
+                    type: 'GET',
+                    url: '/UserWall/Index/',
+                    data: {
+                        Id: Id,
+                        pageNumber: pageNumber
+                    },
+                    success: function (data) {
+                        if (data != '') {
+                            $(".posts").append(data);
+                        }
+                        else {
+                            pageNumber = -1;
+                        }
+                        _inCallback = false;
+                    }
+                });
+            }
+        }
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                getArts();
+            }
+        });
+    })
+</script>

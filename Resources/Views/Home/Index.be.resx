@@ -120,6 +120,9 @@
   <data name="Message" xml:space="preserve">
     <value>Кіньце выклік сваім майстэрствам мастацтва!</value>
   </data>
+  <data name="NoArts" xml:space="preserve">
+    <value>Пакуль няма малюнкаў! :с</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Сардэчна запрашаем!</value>
   </data>
