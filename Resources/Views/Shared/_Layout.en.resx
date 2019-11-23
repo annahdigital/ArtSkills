@@ -123,4 +123,7 @@
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="SearchArtist" xml:space="preserve">
+    <value>Search for artist</value>
+  </data>
 </root>

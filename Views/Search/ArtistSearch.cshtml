@@ -1,0 +1,50 @@
+﻿@using ArtSkills.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<ApplicationUser>
+
+<div id="searchresults">
+    <div class="text-center bg-image extrarounded">
+        <h2>@Localizer["SearchResults"]</h2>
+        <hr />
+    </div>
+    @if (Model.Count != 0)
+    {
+        <div class="followers-list">
+            <div class="row">
+                @foreach (var artist in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="follower-info full-width extrarounded">
+                            <div class="follower-up-info">
+                                @if (artist.UserPic == null)
+                                {
+                                    <img src="~/Resources/kittyspace.png" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(artist.UserPic)" />
+                                }
+                            </div>
+                            @if (artist.artistNickname != null)
+                            {
+                                @Html.ActionLink(artist.artistNickname, "Index", "UserWall", new { Id = artist.Id })
+                            }
+                            else
+                            {
+                                @Html.ActionLink(artist.UserName, "Index", "UserWall", new { Id = artist.Id })
+                            }
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h4>@Localizer["NoResults"]</h4>
+        </div>
+    }
+</div>

@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>Accueil</value>
+  <data name="NoResults" xml:space="preserve">
+    <value>Aucun résultat!</value>
   </data>
-  <data name="Privacy" xml:space="preserve">
-    <value>Confidentialité</value>
-  </data>
-  <data name="SearchArtist" xml:space="preserve">
-    <value>Cherche l'artiste</value>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Résultats de la recherche</value>
   </data>
 </root>

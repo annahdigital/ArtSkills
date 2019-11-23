@@ -49,7 +49,6 @@ namespace ArtSkills.Controllers
 
         public IActionResult ErrorWhileLoading()
         {
-            AppMessage appMessage = new AppMessage("~/Resources/sorry.gif", "Cannot load any posts");
             return View();
         }
     }

@@ -123,4 +123,7 @@
   <data name="Privacy" xml:space="preserve">
     <value>Канфідэнцыяльнасць</value>
   </data>
+  <data name="SearchArtist" xml:space="preserve">
+    <value>Шукаць мастака</value>
+  </data>
 </root>
