@@ -44,6 +44,7 @@ namespace ArtSkills.Controllers
                 return RedirectToAction("Index", "Home", new { area = "" });
         }
 
+        [HttpPost]
         public async Task<IActionResult> DeleteArt(String artID)
         {
             Art art = applicationDbContext.Arts.Find(artID);
