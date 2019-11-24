@@ -72,6 +72,8 @@ namespace ArtSkills
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddSignalR();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                  .AddViewLocalization()
                  .AddDataAnnotationsLocalization();         }
@@ -97,6 +99,12 @@ namespace ArtSkills
 
             app.UseAuthentication();
             app.UseRequestLocalization();
+
+            app.UseSignalR(route =>
+            {
+                route.MapHub<CommentsHub>("/comments");
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
