@@ -1,13 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-
-<div class="text-center bg-image">
-    <h1>@Localizer["Title"]</h1>
-    <p>@Localizer["Message1"]</p>
-    <p>@Localizer["Message2"]</p>
-    <a>@Localizer["Message3"]</a>
-</div>
-<hr />
-<div class="text-center">
-    <img src="~/Resources/wait.png" style="padding: 10px;" alt="" />
-</div>
+@{
+    ViewData["Title"] = "Privacy";
+}
+    <div class="text-center bg-image">
+        <h1>@Localizer["Title"]</h1>
+        <p>@Localizer["Message1"]</p>
+        <p>@Localizer["Message2"]</p>
+        <a>@Localizer["Message3"]</a>
+    </div>
+    <hr />
+    <div class="text-center">
+        <img src="~/Resources/wait.png" style="padding: 10px;" alt="" />
+    </div>

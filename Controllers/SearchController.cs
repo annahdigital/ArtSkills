@@ -24,7 +24,7 @@ namespace ArtSkills.Controllers
         [HttpPost]
         public IActionResult ArtistSearch(string name)
         {
-            var artists = applicationDbContext.Users.Where(a => a.artistNickname.Contains(name)).ToList();
+            var artists = applicationDbContext.Users.Where(a => a.artistNickname.Contains(name) || a.UserName.Contains(name)).ToList();
             return View(artists);
         }
     }

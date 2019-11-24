@@ -55,12 +55,12 @@ namespace ArtSkills.Controllers
             return View(taskslists);
         }
 
-        public async Task<IActionResult> Completed(string Id)
+        public IActionResult Completed(string Id)
         {
             return RedirectToAction("TaskListsCollection", "TaskList", new { Id, completed = true });
         }
 
-        public async Task<IActionResult> InProgress(string Id)
+        public IActionResult InProgress(string Id)
         {
             return RedirectToAction("TaskListsCollection", "TaskList", new { Id, completed = false });
         }

@@ -87,13 +87,14 @@
                         </div>
                         <div class="col-md-1">
                             <button class="add-comment-button" data-assigned-id="@Model.Id"
-                                   onclick="addComment(this);" ></button>
+                                    onclick="addComment(this);"></button>
                         </div>
                     </div>
             </div>
     </div>
         </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="~/js/signalr.min.js"></script>
@@ -113,9 +114,9 @@
 
     function addComment(elem) {
         var id = $(elem).data('assigned-id');
-        var text = document.getElementById("txtrev").value;
-        location.href = '@Url.Action("CommentArt", "Art")' + '?artID=' + id + '&text=' + text;
+        var text = document.getElementById("txtrev").value; 
         hubConnection.invoke('Send', id, text);
+        location.href = '@Url.Action("CommentArt", "Art")' + '?artID=' + id + '&text=' + text;
     };
 
     hubConnection.start();

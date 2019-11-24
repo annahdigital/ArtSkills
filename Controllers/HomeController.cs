@@ -41,6 +41,7 @@ namespace ArtSkills.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
