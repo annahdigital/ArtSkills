@@ -72,13 +72,13 @@
             </div>
             <div class="text-right">@Model.Likes.Count</div>
         </div>
-        <div class="row" style=" margin: auto;">
-                <div class="container-fluid commentsArea" style="width: 700px;">
+        <div class="row" style=" margin: auto; width: 90%">
+                <div class="container-fluid commentsArea" >
                     @{await Html.RenderPartialAsync("~/Views/Comment/CommentsCollection.cshtml", @Model.Comments.ToList());}
                 </div>
         </div>
-        <div class="row" style=" margin: auto;">
-                <div class="container-fluid comment-sending-area" style="width: 700px;">
+        <div class="row" style=" margin: auto; width: 90%">
+                <div class="container-fluid comment-sending-area">
                     <div class="row">
                         <div class="col-md-11">
                             <textarea class="form-control comment-sending-form"
