@@ -25,11 +25,12 @@ namespace ArtSkills.TagHelpers
                 progressPercentage = Math.Round(((decimal)(ProgressValue) / (decimal)progressMax) * 100, 4);
             else
                progressPercentage = 0;
+            int progressRounded = Decimal.ToInt32(progressPercentage);
 
             string progressBarContent =
-            $@"<div class='progress-bar bg-success' role='progressbar' aria-valuenow='{ProgressValue}' 
-                aria-valuemin='{progressMin}' aria-valuemax='{progressMax}' style='width: {progressPercentage}%; padding:5px;'> 
-               <span class='text-center'>{progressPercentage}% </span>
+            $@"<div class='progress-bar bg-success' role='progressbar' aria-valuenow='{progressRounded}' 
+                aria-valuemin='{progressMin}' aria-valuemax='100' style='width: {progressRounded}%; padding:5px;'> 
+               <span class='text-center' style='width: {progressRounded}%'>{progressPercentage}% Complete</span>
             </div>";
 
             output.Content.AppendHtml(progressBarContent);
