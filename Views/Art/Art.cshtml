@@ -86,7 +86,7 @@
                                       placeholder=@Localizer["Message"]></textarea>
                         </div>
                         <div class="col-md-1">
-                            <button class="add-comment-button" data-assigned-id="@Model.Id"
+                            <button data-assigned-id="@Model.Id" class="add-comment-button"
                                     onclick="addComment(this);"></button>
                         </div>
                     </div>
@@ -99,25 +99,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="~/js/signalr.min.js"></script>
 <script>
-    const hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl("/notifications")
-        .build();
-
-     hubConnection.on('Receive', function (message) {
-         alert(message);
-     });
-
-
-        hubConnection.on('Notify', function (message) {
-            alert(message);
-        });
-
-    function addComment(elem) {
+     function addComment(elem) {
         var id = $(elem).data('assigned-id');
-        var text = document.getElementById("txtrev").value; 
-        hubConnection.invoke('Send', id, text);
+            var text = document.getElementById("txtrev").value;
         location.href = '@Url.Action("CommentArt", "Art")' + '?artID=' + id + '&text=' + text;
     };
-
-    hubConnection.start();
 </script>
