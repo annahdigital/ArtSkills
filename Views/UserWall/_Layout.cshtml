@@ -13,7 +13,7 @@
     @if (Model.user.UserPic == null)
     {
         <img src="~/Resources/kittyspace.png" style="padding: 10px;" alt="" />
-        
+
     }
     else
     {
@@ -41,8 +41,8 @@
         }
         else
         {
-            <button id="update-profile-button"
-                    onclick="location.href='@Url.Action("FollowUser", "UserWall", new { Id = Model.user.Id })'"
+            <button id="update-profile-button" data-assigned-id="@Model.user.Id"
+                    onclick="follow(this);"
                     class="btn btn-primary">
                 @Localizer["Follow"]
             </button>
@@ -73,5 +73,23 @@
     <partial name="_UserWallNavigation" />
     <hr />
 </div>
+<script src="~/js/signalr.min.js"></script>
+<script>
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/notifications")
+        .build();
+
+        hubConnection.on('Notify', function (message) {
+            alert(message);
+        });
+
+    function follow(elem) {
+        var id = $(elem).data('assigned-id');
+        hubConnection.invoke('Follow', id);
+        location.href = '@Url.Action("FollowUser", "UserWall")' + '?Id=' + id;
+    };
+
+    hubConnection.start();
+</script>
 
 @RenderBody()

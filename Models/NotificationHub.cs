@@ -11,12 +11,12 @@ using Microsoft.AspNetCore.Identity;
 namespace ArtSkills.Models
 {
     [Authorize]
-    public class CommentsHub : Hub
+    public class NotificationHub : Hub
     {
         public ApplicationDbContext _context { get; set; }
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CommentsHub(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public NotificationHub(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -34,7 +34,22 @@ namespace ArtSkills.Models
             var userName = GetUserName();
             await Clients.Caller.SendAsync("Receive", "Successfully commented art " + art.Name + "!");
             await Clients.User(user.Id).SendAsync("Notify", userName + " commented your art "
-                + art.Name + "!" + "\n Text is: " + comment);
+                + art.Name + "!");
+        }
+
+        public async System.Threading.Tasks.Task Like(string artId)
+        {
+            Art art = _context.Arts.ToList().Find(x => x.Id == artId);
+            ApplicationUser user = art.ApplicationUser;
+            var userName = GetUserName();
+            await Clients.User(user.Id).SendAsync("Notify", userName + " liked your art "
+               + art.Name + "!");
+        }
+
+        public async System.Threading.Tasks.Task Follow(string Id)
+        {
+            var userName = GetUserName();
+            await Clients.User(Id).SendAsync("Notify", userName + " just started following you!");
         }
     }
 }

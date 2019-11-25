@@ -9,6 +9,25 @@
 }
 else
 {
-<div class="btn post-like-button not-liked" postId="@Model.Id"
-     onclick="location.href='@Url.Action("LikeArt", "Art", new { artID = Model.Id })'" />
+<div class="btn post-like-button not-liked" postId="@Model.Id" data-assigned-id="@Model.Id"
+     onclick="Like(this);" />
 }
+
+<script src="~/js/signalr.min.js"></script><script>
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/notifications")
+        .build();
+
+
+        hubConnection.on('Notify', function (message) {
+            alert(message);
+        });
+
+    function Like(elem) {
+        var id = $(elem).data('assigned-id');
+        hubConnection.invoke('Like', id);
+        location.href = '@Url.Action("LikeArt", "Art")' + '?artID=' + id;
+    };
+
+    hubConnection.start();
+</script>

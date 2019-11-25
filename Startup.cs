@@ -102,7 +102,7 @@ namespace ArtSkills
 
             app.UseSignalR(route =>
             {
-                route.MapHub<CommentsHub>("/comments");
+                route.MapHub<NotificationHub>("/notifications");
             });
 
             app.UseMvc(routes =>
