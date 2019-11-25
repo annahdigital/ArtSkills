@@ -27,16 +27,6 @@ namespace ArtSkills.Models
             return Context.User?.Identity.Name;
         }
 
-        public async System.Threading.Tasks.Task Send(string artId, string comment)
-        {
-            Art art = _context.Arts.ToList().Find(x => x.Id == artId);
-            ApplicationUser user = art.ApplicationUser;
-            var userName = GetUserName();
-            await Clients.Caller.SendAsync("Receive", "Successfully commented art " + art.Name + "!");
-            await Clients.User(user.Id).SendAsync("Notify", userName + " commented your art "
-                + art.Name + "!");
-        }
-
         public async System.Threading.Tasks.Task Like(string artId)
         {
             Art art = _context.Arts.ToList().Find(x => x.Id == artId);
