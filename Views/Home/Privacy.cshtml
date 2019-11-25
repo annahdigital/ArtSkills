@@ -1,15 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Configuration
+@inject Microsoft.Extensions.Configuration.IConfiguration AppConfig
 @{
     ViewData["Title"] = "Privacy";
 }
-    <div class="text-center bg-image">
-        <h1>@Localizer["Title"]</h1>
-        <p>@Localizer["Message1"]</p>
-        <p>@Localizer["Message2"]</p>
-        <a>@Localizer["Message3"]</a>
-    </div>
-    <hr />
-    <div class="text-center">
-        <img src="~/Resources/wait.png" style="padding: 10px;" alt="" />
-    </div>
+<div class="text-center bg-image">
+    <h1>@Localizer["Title"]</h1>
+    <p>@Localizer["Message1"]</p>
+    <p>@Localizer["Message2"]</p>
+    <a>@AppConfig.GetSection("ArtSkillsEmail").Value</a>
+</div>
+<hr />
+<div class="text-center">
+    <img src="~/Resources/wait.png" style="padding: 10px;" alt="" />
+</div>
